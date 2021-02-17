@@ -4,12 +4,14 @@
 namespace App\Models\GoogleSheet;
 
 
+use App\Models\Congress;
 use App\Models\MemorialMeeting;
 use App\Models\PublicTalk;
 use App\Models\SpecialTalk;
 use App\Models\WatchtowerStudy;
 use App\Models\WeekendMeeting;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class GuestTalksSheetImporter
 {
@@ -32,9 +34,6 @@ class GuestTalksSheetImporter
 
     public function import()
     {
-        // remove first item which contains column names
-        $this->rawValues->shift();
-
         $this->rawValues->each(function($row) {
 
             if (empty($row[self::DATE_COLUMN])) {
@@ -91,14 +90,33 @@ class GuestTalksSheetImporter
                 $meeting->watchtowerStudy()->save($watchtowerStudy);
             }
 
-            /*
             if ($row[self::TYPE_COLUMN] == 'Dienstwoche') {
+                $meeting = new WeekendMeeting();
+                $meeting->startAt = Carbon::createFromFormat('d.m.y H:i', $row[self::DATE_COLUMN])->toDateTimeString();
+                $meeting->chairman = $row[self::CHAIRMAN_COLUMN];
+                $meeting->save();
 
+                $publicTalk = new PublicTalk();
+                $publicTalk->startAt = $meeting->startAt;
+                $publicTalk->speaker = $row[self::SPEAKER_COLUMN];
+                $publicTalk->congregation = $row[self::CONGREGATION_COLUMN];
+                $publicTalk->disposition = $row[self::DISPOSITION_COLUMN];
+                $publicTalk->topic = $row[self::TOPIC_COLUMN];
+                $meeting->publicTalks()->save($publicTalk)->toArray();
+
+                $watchtowerStudy = new WatchtowerStudy();
+                $watchtowerStudy->startAt = $meeting->startAt->copy()->addMinutes(35);
+                $meeting->watchtowerStudy()->save($watchtowerStudy);
             }
 
             if ($row[self::TYPE_COLUMN] == 'Kongress') {
-
-            }*/
+                $congress = new Congress();
+                $congress->startAt = Carbon::createFromFormat('d.m.y H:i', $row[self::DATE_COLUMN])->toDateTimeString();
+                $congress->motto_id = $row[self::DISPOSITION_COLUMN];
+                $congress->motto = $row[self::TOPIC_COLUMN];
+                $congress->part = $row[self::CONGREGATION_COLUMN];
+                $congress->save();
+            }
 
             return true;
         });
