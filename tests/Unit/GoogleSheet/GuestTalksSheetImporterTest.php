@@ -3,8 +3,9 @@
 namespace Tests\Unit\GoogleSheet;
 
 use App\Models\Congress;
+use App\Models\GoogleSheet\GuestTalksSheet\ColumnMap;
 use App\Models\GoogleSheet\Normalizer;
-use App\Models\GoogleSheet\GuestTalksSheetImporter as SheetImporter;
+use App\Models\GoogleSheet\GuestTalksSheet\Importer as SheetImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -25,17 +26,17 @@ class GuestTalksSheetImporterTest extends TestCase
         $normalizedResponse = $this->getNormalizedDummyResponse();
 
         $publicTalks = collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "Vortrag";
+            return $row[ColumnMap::TYPE] === "Vortrag";
         });
 
         (new SheetImporter($normalizedResponse))->import();
 
         $publicTalks->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
-                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[SheetImporter::DATE_COLUMN])->toDateTimeString(),
-                'speaker' => $talk[SheetImporter::SPEAKER_COLUMN],
-                'disposition' => $talk[SheetImporter::DISPOSITION_COLUMN],
-                'topic' => $talk[SheetImporter::TOPIC_COLUMN],
+                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[ColumnMap::DATE])->toDateTimeString(),
+                'speaker' => $talk[ColumnMap::SPEAKER],
+                'disposition' => $talk[ColumnMap::DISPOSITION],
+                'topic' => $talk[ColumnMap::TOPIC],
             ]);
         });
     }
@@ -45,7 +46,7 @@ class GuestTalksSheetImporterTest extends TestCase
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "GM";
+            return $row[ColumnMap::TYPE] === "GM";
         })->count();
 
         (new SheetImporter($normalizedResponse))->import();
@@ -58,7 +59,7 @@ class GuestTalksSheetImporterTest extends TestCase
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "Sondervortrag";
+            return $row[ColumnMap::TYPE] === "Sondervortrag";
         })->count();
 
         (new SheetImporter($normalizedResponse))->import();
@@ -71,17 +72,17 @@ class GuestTalksSheetImporterTest extends TestCase
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $circuitOverseerTalk = collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "Dienstwoche";
+            return $row[ColumnMap::TYPE] === "Dienstwoche";
         });
 
         (new SheetImporter($normalizedResponse))->import();
 
         $circuitOverseerTalk->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
-                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[SheetImporter::DATE_COLUMN])->toDateTimeString(),
-                'speaker' => $talk[SheetImporter::SPEAKER_COLUMN],
-                'disposition' => $talk[SheetImporter::DISPOSITION_COLUMN],
-                'topic' => $talk[SheetImporter::TOPIC_COLUMN],
+                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[ColumnMap::DATE])->toDateTimeString(),
+                'speaker' => $talk[ColumnMap::SPEAKER],
+                'disposition' => $talk[ColumnMap::DISPOSITION],
+                'topic' => $talk[ColumnMap::TOPIC],
             ]);
         });
     }
@@ -92,17 +93,11 @@ class GuestTalksSheetImporterTest extends TestCase
         // Arrange
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "Kongress";
+            return $row[ColumnMap::TYPE] === "Kongress";
         })->count();
-
-        ray(collect($normalizedResponse)->filter(function($row) {
-            return $row[SheetImporter::TYPE_COLUMN] === "Kongress";
-        }));
 
         // Act
         (new SheetImporter($normalizedResponse))->import();
-
-        ray(Congress::all()->toArray());
 
         // Assert
         $this->assertDatabaseCount('congresses', $count);

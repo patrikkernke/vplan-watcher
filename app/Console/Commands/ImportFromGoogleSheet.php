@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\GoogleSheet\Connector;
-use App\Models\GoogleSheet\GuestTalksSheetImporter;
+use App\Models\GoogleSheet\Importer;
 use Illuminate\Console\Command;
 use Storage;
 
@@ -48,7 +48,6 @@ class ImportFromGoogleSheet extends Command
             ->fromSheet('Gastvorträge', 'C:K')
             ->load();
 
-        ray($data);
 
         if (empty($data)) {
             $this->info('Keine Daten zum importieren vorhanden. Ist das Sheet auch erreichbar?');
