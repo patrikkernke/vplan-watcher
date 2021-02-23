@@ -5,7 +5,6 @@ namespace Tests\Unit\GoogleSheet;
 use App\Models\Meeting;
 use App\Models\Schedule\Item\CircuitOverseerTalk;
 use App\Models\Schedule\Item\PublicTalk;
-use App\Models\Schedule\Item\Schedule\Item\Congress;
 use App\Models\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\GoogleSheet\Normalizer;
 use App\Models\GoogleSheet\GuestTalksSheet\Importer as SheetImporter;
@@ -24,7 +23,7 @@ class GuestTalksSheetImporterTest extends TestCase
     private $dummyResponse = [];
 
     /** @test */
-    public function it_recognizes_public_talks_and_creates_them()
+    public function it_creates_public_talks()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
 
