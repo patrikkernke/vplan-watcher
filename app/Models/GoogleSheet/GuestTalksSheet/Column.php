@@ -3,8 +3,15 @@
 
 namespace App\Models\GoogleSheet\GuestTalksSheet;
 
-
-class ColumnMap
+/**
+ * Class Column
+ *
+ * Maps array key to semantic column name defined in the google table
+ * https://docs.google.com/spreadsheets/d/1eqwBV8UuYmWQLmpZrgElr0QL2iiBQetjrHDgikSg1CY/edit#gid=0
+ *
+ * @package App\Models\GoogleSheet\GuestTalksSheet
+ */
+class Column
 {
     const DATE = 0;
     const TYPE = 1;

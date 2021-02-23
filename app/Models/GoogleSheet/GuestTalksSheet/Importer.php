@@ -3,19 +3,16 @@
 
 namespace App\Models\GoogleSheet\GuestTalksSheet;
 
-use App\Models\GoogleSheet\GuestTalksSheet\Mapper;
-use Illuminate\Support\Str;
-
 class Importer
 {
     private $rawValues;
 
     private $mapper = [
-        'Vortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\PublicTalk::class,
-        'Kongress' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\Congress::class,
-        'GM' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeeting::class,
-        'Sondervortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalk::class,
-        'Dienstwoche' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerTalk::class,
+        'Vortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper::class,
+        'Kongress' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\CongressMapper::class,
+        'GM' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeetingMapper::class,
+        'Sondervortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalkMapper::class,
+        'Dienstwoche' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
     ];
 
     public function __construct($rawValues)
@@ -27,18 +24,22 @@ class Importer
     {
         $this->rawValues->each(function($row) {
 
-            if (empty($row[ColumnMap::DATE])) {
+            if (empty($row[Column::DATE])) {
                 true; // continue loop
             }
 
-            $rowType = $row[ColumnMap::TYPE];
+            $rowType = $row[Column::TYPE];
 
             if (! array_key_exists($rowType, $this->mapper)) {
                 return true; // continue loop
             }
 
-            $map = $this->mapper[$rowType] . '::map';;
-            $map($row);
+            if (! class_exists($this->mapper[$rowType])) {
+                return true; // continue loop
+            }
+
+            $mapperClass = $this->mapper[$rowType];
+            $mapperClass::map($row);
 
             return true;
         });

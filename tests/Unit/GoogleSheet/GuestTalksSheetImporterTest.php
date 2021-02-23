@@ -2,8 +2,11 @@
 
 namespace Tests\Unit\GoogleSheet;
 
-use App\Models\Congress;
-use App\Models\GoogleSheet\GuestTalksSheet\ColumnMap;
+use App\Models\Meeting;
+use App\Models\Schedule\Item\CircuitOverseerTalk;
+use App\Models\Schedule\Item\PublicTalk;
+use App\Models\Schedule\Item\Schedule\Item\Congress;
+use App\Models\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\GoogleSheet\Normalizer;
 use App\Models\GoogleSheet\GuestTalksSheet\Importer as SheetImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,17 +29,17 @@ class GuestTalksSheetImporterTest extends TestCase
         $normalizedResponse = $this->getNormalizedDummyResponse();
 
         $publicTalks = collect($normalizedResponse)->filter(function($row) {
-            return $row[ColumnMap::TYPE] === "Vortrag";
+            return $row[Column::TYPE] === "Vortrag";
         });
 
         (new SheetImporter($normalizedResponse))->import();
 
         $publicTalks->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
-                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[ColumnMap::DATE])->toDateTimeString(),
-                'speaker' => $talk[ColumnMap::SPEAKER],
-                'disposition' => $talk[ColumnMap::DISPOSITION],
-                'topic' => $talk[ColumnMap::TOPIC],
+                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[Column::DATE])->toDateTimeString(),
+                'speaker' => $talk[Column::SPEAKER],
+                'disposition' => $talk[Column::DISPOSITION],
+                'topic' => $talk[Column::TOPIC],
             ]);
         });
     }
@@ -46,12 +49,19 @@ class GuestTalksSheetImporterTest extends TestCase
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[ColumnMap::TYPE] === "GM";
+            return $row[Column::TYPE] === "GM";
         })->count();
 
         (new SheetImporter($normalizedResponse))->import();
 
-        $this->assertDatabaseCount('memorial_meetings', $count);
+        $meetings = Meeting::where('type', 'Gedächtnismahl')->get();
+
+        $this->assertCount($count, $meetings);
+
+        foreach ($meetings as $meeting) {
+            $this->assertCount(1, $meeting->schedule());
+            $this->assertInstanceOf(PublicTalk::class, $meeting->schedule()->first());
+        }
     }
 
     /** @test */
@@ -59,7 +69,7 @@ class GuestTalksSheetImporterTest extends TestCase
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[ColumnMap::TYPE] === "Sondervortrag";
+            return $row[Column::TYPE] === "Sondervortrag";
         })->count();
 
         (new SheetImporter($normalizedResponse))->import();
@@ -68,23 +78,21 @@ class GuestTalksSheetImporterTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_circuit_overseer_talk()
+    public function it_creates_circuit_overseer_public_talk()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
-        $circuitOverseerTalk = collect($normalizedResponse)->filter(function($row) {
-            return $row[ColumnMap::TYPE] === "Dienstwoche";
+        $circuitOverseerPublicTalksRaw = collect($normalizedResponse)->filter(function($row) {
+            return $row[Column::TYPE] === "Dienstwoche";
         });
 
         (new SheetImporter($normalizedResponse))->import();
 
-        $circuitOverseerTalk->each(function($talk) {
-            $this->assertDatabaseHas('public_talks', [
-                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[ColumnMap::DATE])->toDateTimeString(),
-                'speaker' => $talk[ColumnMap::SPEAKER],
-                'disposition' => $talk[ColumnMap::DISPOSITION],
-                'topic' => $talk[ColumnMap::TOPIC],
-            ]);
-        });
+        foreach ($circuitOverseerPublicTalksRaw as $row) {
+            $startDate = Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE]);
+            $meetings = Meeting::where('startAt', $startDate->toDateTimeString())->get();
+            $this->assertCount(1, $meetings);
+            $this->assertInstanceOf(CircuitOverseerTalk::class, $meetings->first()->schedule()->first());
+        }
     }
 
     /** @test */
@@ -93,7 +101,7 @@ class GuestTalksSheetImporterTest extends TestCase
         // Arrange
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
-            return $row[ColumnMap::TYPE] === "Kongress";
+            return $row[Column::TYPE] === "Kongress";
         })->count();
 
         // Act

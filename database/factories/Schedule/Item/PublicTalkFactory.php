@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Schedule\Item;
 
-use App\Models\PublicTalk;
+use App\Models\Schedule\Item\PublicTalk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PublicTalkFactory extends Factory

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpecialTalksTable extends Migration
+class CreateMeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateSpecialTalksTable extends Migration
      */
     public function up()
     {
-        Schema::create('special_talks', function (Blueprint $table) {
+        Schema::create('meetings', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('meeting_id')->nullable();
-
             $table->dateTime('startAt');
-            $table->string('speaker')->nullable();
-            $table->string('congregation')->nullable();
-            $table->string('disposition')->nullable();
-            $table->string('topic')->nullable();
+            $table->string('type');
+            $table->string('chairman')->nullable();
 
             $table->timestamps();
         });
@@ -35,6 +31,6 @@ class CreateSpecialTalksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('special_talks');
+        Schema::dropIfExists('meetings');
     }
 }

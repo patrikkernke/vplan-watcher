@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\MemorialMeeting;
+use App\Models\Schedule\Item\Schedule\Item\MemorialMeeting;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MemorialMeetingFactory extends Factory

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\WeekendMeeting;
+use App\Models\Schedule\Item\Schedule\Item\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class WeekendMeetingFactory extends Factory
+class ScheduleItemFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = WeekendMeeting::class;
+    protected $model = ScheduleItem::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,7 @@ class WeekendMeetingFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
-            'chairman' => $this->faker->firstName . ' ' . $this->faker->lastName
+            //
         ];
     }
 }

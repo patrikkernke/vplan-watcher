@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Schedule\Item;
 
-use App\Models\WatchtowerStudy;
+use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WatchtowerStudyFactory extends Factory

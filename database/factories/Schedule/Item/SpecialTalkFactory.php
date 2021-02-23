@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Schedule\Item;
 
-use App\Models\SpecialTalk;
+use App\Models\Schedule\Item\SpecialTalk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SpecialTalkFactory extends Factory
@@ -22,7 +22,11 @@ class SpecialTalkFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'startAt' => $this->faker->dateTimeThisYear,
+            'speaker' => $this->faker->firstName .' '. $this->faker->lastName,
+            'congregation' => $this->faker->city,
+            'disposition' => $this->faker->unique()->randomNumber(3),
+            'topic' => $this->faker->sentence(6)
         ];
     }
 }

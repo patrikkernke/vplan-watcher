@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWeekendMeetingsTable extends Migration
+class CreateCircuitOverseerTalksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateWeekendMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('weekend_meetings', function (Blueprint $table) {
+        Schema::create('circuit_overseer_talks', function (Blueprint $table) {
             $table->id();
 
-            $table->date('startAt');
-            $table->string('chairman')->nullable();
+            $table->unsignedInteger('meeting_id')->nullable();
+
+            $table->dateTime('startAt');
+            $table->string('circuitOverseer')->nullable();
+            $table->string('topic')->nullable();
 
             $table->timestamps();
         });
@@ -30,6 +33,6 @@ class CreateWeekendMeetingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weekend_meetings');
+        Schema::dropIfExists('schedule_item_circuit_overseer_talks');
     }
 }

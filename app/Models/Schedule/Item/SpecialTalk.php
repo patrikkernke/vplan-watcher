@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Schedule\Item;
 
+use App\Models\Schedule\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Congress extends Model
+class SpecialTalk extends ScheduleItem
 {
     use HasFactory;
 

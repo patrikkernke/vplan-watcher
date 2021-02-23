@@ -16,7 +16,7 @@ class CreateWatchtowerStudiesTable extends Migration
         Schema::create('watchtower_studies', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('meeting_id');
+            $table->unsignedInteger('meeting_id')->nullable();
 
             $table->dateTime('startAt');
             $table->string('conductor')->nullable();

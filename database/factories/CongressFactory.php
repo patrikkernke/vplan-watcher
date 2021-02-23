@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Congress;
+use App\Models\Schedule\Item\Schedule\Item\Congress;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CongressFactory extends Factory

@@ -16,7 +16,7 @@ class CreatePublicTalksTable extends Migration
         Schema::create('public_talks', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('meeting_id');
+            $table->unsignedInteger('meeting_id')->nullable();
 
             $table->dateTime('startAt');
             $table->string('speaker')->nullable();
