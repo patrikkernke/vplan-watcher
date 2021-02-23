@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Schedule;
 
 use App\Models\Schedule\Item\Schedule\Item\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
