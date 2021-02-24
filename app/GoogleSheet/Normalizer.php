@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\GoogleSheet;
+namespace App\GoogleSheet;
 
 
 use Illuminate\Support\Collection;

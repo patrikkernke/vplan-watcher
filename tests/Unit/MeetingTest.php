@@ -99,6 +99,25 @@ class MeetingTest extends TestCase
         $this->assertEquals($scheduleItem1->id, $schedule->last()->id);
     }
 
+    /** @test */
+    public function it_exports_data_for_pdf_generation()
+    {
+        // Arrange
+        $meeting = Meeting::factory()->create();
+        // Act
+        $data = $meeting->exportForPdfSource();
+        // Assert
+        $this->assertIsArray($data);
+        $this->assertEquals($meeting->startAt->translatedFormat('d. M'), $data['date']);
+        $this->assertEquals($meeting->chairman, $data['chairman']);
+        $this->assertArrayHasKey('schedule', $data);
+    }
+
+
+    /**
+     * Providers
+     */
+
     public function scheduleItemsProvider():array
     {
         return [

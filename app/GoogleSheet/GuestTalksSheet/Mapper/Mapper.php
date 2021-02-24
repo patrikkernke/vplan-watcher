@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\GoogleSheet\GuestTalksSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 interface Mapper
 {

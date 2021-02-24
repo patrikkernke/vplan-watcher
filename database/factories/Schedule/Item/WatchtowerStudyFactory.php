@@ -24,9 +24,9 @@ class WatchtowerStudyFactory extends Factory
     {
         return [
             'startAt' => $this->faker->dateTimeThisYear,
-            'conductor' => $this->faker->firstName .' '. $this->faker->lastName,
+            'conductor' => $this->faker->firstName[0] .'. '. $this->faker->lastName,
             'reader' => $this->faker->boolean()
-                ? $this->faker->firstName .' '. $this->faker->lastName
+                ? $this->faker->firstName[0] .'. '. $this->faker->lastName
                 : null,
         ];
     }

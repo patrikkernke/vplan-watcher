@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\GoogleSheet\GuestTalksSheet;
+namespace App\GoogleSheet\GuestTalksSheet;
 
 /**
  * Class Column

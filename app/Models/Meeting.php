@@ -49,4 +49,15 @@ class Meeting extends Model
 
         return $schedule->sortBy('startAt');
     }
+
+    public function exportForPdfSource():array
+    {
+        return [
+            'date' => $this->startAt->translatedFormat('d. M'),
+            'chairman' => $this->chairman,
+            'schedule' => $this->schedule()->map(function ($scheduleItem) {
+                return $scheduleItem->exportForPdfSource();
+            })
+        ];
+    }
 }

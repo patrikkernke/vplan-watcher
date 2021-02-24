@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Models\GoogleSheet\Connector;
-use App\Models\GoogleSheet\GuestTalksSheet\Importer;
-use App\Models\GoogleSheet\Normalizer;
+use App\GoogleSheet\Connector;
+use App\GoogleSheet\GuestTalksSheet\Importer;
+use App\GoogleSheet\Normalizer;
 use Illuminate\Console\Command;
 use Storage;
 
-class ImportFromGoogleSheet extends Command
+class ImportGuestTalksFromGoogleSheet extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,7 +37,7 @@ class ImportFromGoogleSheet extends Command
     /**
      * Execute the console command.
      *
-     * @param \App\Models\GoogleSheet\Connector $connector
+     * @param \App\GoogleSheet\Connector $connector
      *
      * @return int
      */

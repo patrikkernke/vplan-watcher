@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\GoogleSheet;
 
-use App\Models\GoogleSheet\Normalizer;
+use App\GoogleSheet\Normalizer;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 

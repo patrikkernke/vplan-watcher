@@ -1,18 +1,18 @@
 <?php
 
 
-namespace App\Models\GoogleSheet\GuestTalksSheet;
+namespace App\GoogleSheet\GuestTalksSheet;
 
 class Importer
 {
     private $rawValues;
 
     private $mapper = [
-        'Vortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper::class,
-        'Kongress' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\CongressMapper::class,
-        'GM' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeetingMapper::class,
-        'Sondervortrag' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalkMapper::class,
-        'Dienstwoche' => \App\Models\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
+        'Vortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper::class,
+        'Kongress' => \App\GoogleSheet\GuestTalksSheet\Mapper\CongressMapper::class,
+        'GM' => \App\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeetingMapper::class,
+        'Sondervortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalkMapper::class,
+        'Dienstwoche' => \App\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
     ];
 
     public function __construct($rawValues)

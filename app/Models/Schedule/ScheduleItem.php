@@ -12,4 +12,14 @@ abstract class ScheduleItem extends Model
     {
         return $this->belongsTo(Meeting::class);
     }
+
+    /**
+     * Prepare data and export for pdf generation
+     *
+     * @return array
+     */
+    public function exportForPdfSource():array
+    {
+        return $this->toArray();
+    }
 }

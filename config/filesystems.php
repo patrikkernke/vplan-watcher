@@ -40,6 +40,11 @@ return [
             'root' => base_path('tests/Dummies'),
         ],
 
+        'pdf-sources' => [
+            'driver' => 'local',
+            'root' => base_path('pdf/sources'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

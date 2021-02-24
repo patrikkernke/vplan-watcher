@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Models\GoogleSheet\GuestTalksSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 
 use App\Models\Congress;
-use App\Models\GoogleSheet\GuestTalksSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use Illuminate\Support\Carbon;
 
 class CongressMapper implements Mapper

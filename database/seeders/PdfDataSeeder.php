@@ -16,13 +16,26 @@ class PdfDataSeeder extends Seeder
      */
     public function run()
     {
+        $this->createDefaultWeekendMeeting(-10);
+        $this->createDefaultWeekendMeeting(-9);
+        $this->createDefaultWeekendMeeting(-8);
+        $this->createDefaultWeekendMeeting(-7);
+        $this->createDefaultWeekendMeeting(-6);
+        $this->createDefaultWeekendMeeting(-5);
+        $this->createDefaultWeekendMeeting(-4);
         $this->createDefaultWeekendMeeting(-3);
         $this->createDefaultWeekendMeeting(-2);
         $this->createDefaultWeekendMeeting(-1);
-        $this->createDefaultWeekendMeeting(0);
         $this->createDefaultWeekendMeeting(1);
         $this->createDefaultWeekendMeeting(2);
         $this->createDefaultWeekendMeeting(3);
+        $this->createDefaultWeekendMeeting(4);
+        $this->createDefaultWeekendMeeting(5);
+        $this->createDefaultWeekendMeeting(6);
+        $this->createDefaultWeekendMeeting(7);
+        $this->createDefaultWeekendMeeting(8);
+        $this->createDefaultWeekendMeeting(9);
+        $this->createDefaultWeekendMeeting(10);
     }
 
     /**

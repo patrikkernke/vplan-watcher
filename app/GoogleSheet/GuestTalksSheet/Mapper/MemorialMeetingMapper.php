@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Models\GoogleSheet\GuestTalksSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 
-use App\Models\GoogleSheet\GuestTalksSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\Meeting;
 use App\Models\MemorialMeeting;
 use App\Models\Schedule\Item\PublicTalk;

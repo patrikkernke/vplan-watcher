@@ -25,7 +25,7 @@ class MeetingFactory extends Factory
         return [
             'startAt' => $this->faker->dateTimeThisYear,
             'chairman' => $this->faker->boolean
-                ? $this->faker->firstName ." ". $this->faker->lastName
+                ? $this->faker->firstName[0] .". ". $this->faker->lastName
                 : null,
             'type' => $this->faker->randomElement([
                 'Öffentliche Zusammenkunft',
@@ -45,6 +45,7 @@ class MeetingFactory extends Factory
     public function atWeekFromNow(int $weeks = 0):MeetingFactory
     {
         $weekMethod = $weeks < 0 ? 'subRealDays' : 'addRealDays';
+        $weeks = abs($weeks);
 
         return $this->state(function (array $attributes) use ($weekMethod, $weeks) {
             return [
