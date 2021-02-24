@@ -4,6 +4,7 @@ namespace Database\Factories\Schedule\Item;
 
 use App\Models\Schedule\Item\PublicTalk;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class PublicTalkFactory extends Factory
 {
@@ -28,5 +29,14 @@ class PublicTalkFactory extends Factory
             'disposition' => $this->faker->unique()->randomNumber(3),
             'topic' => $this->faker->sentence(6)
         ];
+    }
+
+    public function atTime(Carbon $time):PublicTalkFactory
+    {
+        return $this->state(function (array $attributes) use ($time) {
+            return [
+                'startAt' => $time->toDateTimeString()
+            ];
+        });
     }
 }

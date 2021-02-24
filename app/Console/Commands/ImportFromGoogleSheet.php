@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\GoogleSheet\Connector;
 use App\Models\GoogleSheet\GuestTalksSheet\Importer;
+use App\Models\GoogleSheet\Normalizer;
 use Illuminate\Console\Command;
 use Storage;
 
@@ -63,7 +64,8 @@ class ImportFromGoogleSheet extends Command
             $this->info('Datei wurde erstellt.');
         }
 
-        /*(new WeekendMeetingsImporter($data))->import();*/
+        $normalizedData = Normalizer::cleanup($data);
+        (new Importer($normalizedData))->import();
 
         return 0;
     }

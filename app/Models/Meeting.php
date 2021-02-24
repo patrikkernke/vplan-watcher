@@ -30,7 +30,9 @@ class Meeting extends Model
 
     public function addToSchedule(ScheduleItem $scheduleItem)
     {
-        return $this->hasMany(get_class($scheduleItem))->save($scheduleItem);
+        $this->hasMany(get_class($scheduleItem))->save($scheduleItem);
+
+        return $this;
     }
 
     public function schedule():Collection

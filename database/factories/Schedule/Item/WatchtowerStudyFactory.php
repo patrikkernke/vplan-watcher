@@ -4,6 +4,7 @@ namespace Database\Factories\Schedule\Item;
 
 use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class WatchtowerStudyFactory extends Factory
 {
@@ -24,7 +25,18 @@ class WatchtowerStudyFactory extends Factory
         return [
             'startAt' => $this->faker->dateTimeThisYear,
             'conductor' => $this->faker->firstName .' '. $this->faker->lastName,
-            'reader' => $this->faker->firstName .' '. $this->faker->lastName,
+            'reader' => $this->faker->boolean()
+                ? $this->faker->firstName .' '. $this->faker->lastName
+                : null,
         ];
+    }
+
+    public function atTime(Carbon $time):WatchtowerStudyFactory
+    {
+        return $this->state(function (array $attributes) use ($time) {
+            return [
+                'startAt' => $time->toDateTimeString()
+            ];
+        });
     }
 }

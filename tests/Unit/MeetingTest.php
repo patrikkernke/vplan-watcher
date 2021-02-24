@@ -84,15 +84,13 @@ class MeetingTest extends TestCase
     {
         $meeting = Meeting::factory()->create();
 
-        $scheduleItem1 = $meeting->addToSchedule(
-            PublicTalk::factory()->create(['startAt' => '2021-02-12 11:30:00'])
-        );
-        $scheduleItem2 = $meeting->addToSchedule(
-            WatchtowerStudy::factory()->create(['startAt' => '2021-02-12 10:45:00'])
-        );
-        $scheduleItem3 = $meeting->addToSchedule(
-            PublicTalk::factory()->create(['startAt' => '2021-02-12 10:00:00'])
-        );
+        $scheduleItem1 = PublicTalk::factory()->create(['startAt' => '2021-02-12 11:30:00']);
+        $scheduleItem2 = WatchtowerStudy::factory()->create(['startAt' => '2021-02-12 10:45:00']);
+        $scheduleItem3 = PublicTalk::factory()->create(['startAt' => '2021-02-12 10:00:00']);
+
+        $meeting->addToSchedule($scheduleItem1)
+            ->addToSchedule($scheduleItem2)
+            ->addToSchedule($scheduleItem3);
 
         $schedule = $meeting->schedule();
 
