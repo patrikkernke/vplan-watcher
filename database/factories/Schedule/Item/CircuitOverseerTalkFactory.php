@@ -4,6 +4,7 @@ namespace Database\Factories\Schedule\Item;
 
 use App\Models\Schedule\Item\CircuitOverseerTalk;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class CircuitOverseerTalkFactory extends Factory
 {
@@ -26,5 +27,14 @@ class CircuitOverseerTalkFactory extends Factory
             'circuitOverseer' => 'Uwe Ackermann',
             'topic' => $this->faker->sentence(6)
         ];
+    }
+
+    public function atTime(Carbon $time):CircuitOverseerTalkFactory
+    {
+        return $this->state(function (array $attributes) use ($time) {
+            return [
+                'startAt' => $time->toDateTimeString()
+            ];
+        });
     }
 }

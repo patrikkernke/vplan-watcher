@@ -47,7 +47,7 @@ class Meeting extends Model
             });
         }
 
-        return $schedule->sortBy('startAt');
+        return $schedule->sortBy('startAt')->values();
     }
 
     public function exportForPdfSource():array

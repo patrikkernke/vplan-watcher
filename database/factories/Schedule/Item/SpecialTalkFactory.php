@@ -4,6 +4,7 @@ namespace Database\Factories\Schedule\Item;
 
 use App\Models\Schedule\Item\SpecialTalk;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class SpecialTalkFactory extends Factory
 {
@@ -28,5 +29,14 @@ class SpecialTalkFactory extends Factory
             'disposition' => $this->faker->unique()->randomNumber(3),
             'topic' => $this->faker->sentence(6)
         ];
+    }
+
+    public function atTime(Carbon $time):SpecialTalkFactory
+    {
+        return $this->state(function (array $attributes) use ($time) {
+            return [
+                'startAt' => $time->toDateTimeString()
+            ];
+        });
     }
 }

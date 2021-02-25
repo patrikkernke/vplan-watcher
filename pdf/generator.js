@@ -1,7 +1,7 @@
-const WeekendMeetingsPlan = require("./models/WeekendMeetingsPlan")
+const MeetingsPlan = require("./models/MeetingsPlan")
 const DataSourceReader = require("./models/DataSourceReader")
 
-const plan = new WeekendMeetingsPlan(
+const plan = new MeetingsPlan(
     DataSourceReader.read('weekend-meetings.json')
 )
 plan.render().save("pdf/docs/a4.pdf");

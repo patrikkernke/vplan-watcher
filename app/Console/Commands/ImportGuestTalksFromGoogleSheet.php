@@ -66,6 +66,7 @@ class ImportGuestTalksFromGoogleSheet extends Command
 
         $normalizedData = Normalizer::cleanup($data);
         (new Importer($normalizedData))->import();
+        $this->info('Den aus der GoogleSheet-Tabelle wurden importiert.');
 
         return 0;
     }

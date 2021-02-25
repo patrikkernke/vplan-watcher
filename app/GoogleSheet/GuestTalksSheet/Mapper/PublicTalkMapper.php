@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class PublicTalkMapper implements Mapper
 {
@@ -26,12 +27,14 @@ class PublicTalkMapper implements Mapper
             'speaker'      => $row[Column::SPEAKER],
             'congregation' => $row[Column::CONGREGATION],
             'disposition'  => $row[Column::DISPOSITION],
-            'topic'        => $row[Column::TOPIC],
+            'topic'        => Str::contains(Str::lower($row[Column::TOPIC]), 'vortragsthema') ? null : $row[Column::TOPIC],
         ]));
 
         $meeting->addToSchedule(WatchtowerStudy::create([
             'startAt' => $meeting->startAt->copy()->addMinutes(35),
             'reader'  => $row[Column::READER]
         ]));
+
+        return $meeting;
     }
 }
