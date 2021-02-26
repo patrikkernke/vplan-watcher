@@ -33,12 +33,12 @@ class GuestTalksSheetImporterTest extends TestCase
 
         (new SheetImporter($normalizedResponse))->import();
 
+        //** todo@pk -> test über Objekt statt datenbank */
         $publicTalks->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
                 'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[Column::DATE])->toDateTimeString(),
                 'speaker' => $talk[Column::SPEAKER],
                 'disposition' => $talk[Column::DISPOSITION],
-                'topic' => $talk[Column::TOPIC],
             ]);
         });
     }

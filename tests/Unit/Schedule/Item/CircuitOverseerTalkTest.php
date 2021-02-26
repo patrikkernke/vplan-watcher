@@ -20,7 +20,7 @@ class CircuitOverseerTalkTest extends TestCase
         // Assert
         $this->assertIsArray($data);
         $this->assertEquals('CircuitOverseerTalk', $data['type']);
-        $this->assertEquals($talk->speacircuitOverseerker, $data['circuitOverseer']);
+        $this->assertEquals($talk->circuitOverseer, $data['circuitOverseer']);
         $this->assertEquals($talk->topic, $data['topic']);
     }
 }

@@ -23,7 +23,7 @@ class PdfDataSeeder extends Seeder
         $this->createDefaultWeekendMeeting(-8);
         $this->createDefaultWeekendMeeting(-7);
         $this->createDefaultWeekendMeeting(-6);
-        // $this->createWeekendMeetingWithCircuitOverseerTalk(-5);
+        $this->createWeekendMeetingWithCircuitOverseerTalk(-5);
         $this->createDefaultWeekendMeeting(-4);
         $this->createDefaultWeekendMeeting(-3);
         $this->createDefaultWeekendMeeting(-2);
