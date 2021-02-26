@@ -9,7 +9,8 @@ class MeetingsPlan extends PdfPlan
         data.forEach(meeting => {
             let block = null;
 
-            switch (meeting.type) {
+            switch (meeting.type)
+            {
                 case 'Kongress':
                     block = this._congressBlock(meeting);
                     break;
@@ -91,7 +92,7 @@ class MeetingsPlan extends PdfPlan
 
         renderBlock.withData({
             date: meeting.date,
-            label: 'Dienstwoche',
+            label: meeting.type,
             chairman: meeting.chairman || '--',
             reader: hasWatchtowerStudy ? meeting.schedule[1].reader : null,
             topic: meeting.schedule[0].topic,
@@ -144,7 +145,7 @@ class MeetingsPlan extends PdfPlan
 
         block.withData({
             date: meeting.date,
-            label: 'Kongress',
+            label: meeting.type,
             topic: meeting.schedule[0].motto,
         }).withColorStyle('#047857');
 

@@ -5,6 +5,7 @@ namespace App\GoogleSheet;
 
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Normalizer
 {
@@ -30,6 +31,13 @@ class Normalizer
 
             return $row;
          });
+
+        // trim strings
+        $collection = $collection->map(function ($row) {
+            return collect($row)->map(function ($value) {
+                return is_string($value) ? trim($value) : $value;
+            })->toArray();
+        });
 
         return $collection;
     }
