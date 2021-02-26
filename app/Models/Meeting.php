@@ -3,13 +3,17 @@
 namespace App\Models;
 
 use App\Models\Schedule\Item\CircuitOverseerTalk;
+use App\Models\Schedule\Item\Congress;
 use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use App\Models\Schedule\ScheduleItem;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use ReflectionClass;
 
 class Meeting extends Model
 {
@@ -26,6 +30,7 @@ class Meeting extends Model
         WatchtowerStudy::class,
         SpecialTalk::class,
         CircuitOverseerTalk::class,
+        Congress::class,
     ];
 
     public function addToSchedule(ScheduleItem $scheduleItem)
@@ -50,9 +55,22 @@ class Meeting extends Model
         return $schedule->sortBy('startAt')->values();
     }
 
+    /** todo@pk in trait extrahieren */
+    public function scopeAllAfter($query, Carbon $date = null): Builder
+    {
+        if (is_null($date)) $date = now();
+
+        return $query->whereDate(
+            'startAt',
+            '>=',
+            $date->toDatetimestring()
+        );
+    }
+
     public function exportForPdfSource():array
     {
         return [
+            'type' => $this->type,
             'date' => $this->startAt->translatedFormat('d. M'),
             'chairman' => $this->chairman,
             'schedule' => $this->schedule()->map(function ($scheduleItem) {

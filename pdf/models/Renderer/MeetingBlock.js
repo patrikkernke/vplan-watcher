@@ -97,7 +97,7 @@ class MeetingBlock
         this._renderTopic(20, this._data.label ? secondLineY : firstLineY);
         if (this._data.subtopic) this._renderSubtopic(20, this._data.label ? thirdLineY : secondLineY);
 
-        this._renderChairman(150, firstLineY);
+        if (this._data.chairman) this._renderChairman(150, firstLineY);
         if (this._data.reader) this._renderReader(150, secondLineY);
 
         return this;
@@ -214,7 +214,7 @@ class MeetingBlock
             .setFont('Inter', 'normal')
             .setFontSize(9)
             .setTextColor(this._color.base)
-            .text(this._data.chairman || '--', this._x(x + 6), this._y(y));
+            .text(this._data.chairman, this._x(x + 6), this._y(y));
     }
 
     _renderReader(x, y)

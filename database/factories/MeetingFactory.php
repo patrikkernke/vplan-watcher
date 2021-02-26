@@ -40,7 +40,7 @@ class MeetingFactory extends Factory
      *
      * @param int $weeks
      *
-     * @return \Database\Factories\MeetingFactory
+     * @return \Database\Factories\Schedule\Item\MeetingFactory
      */
     public function atWeekFromNow(int $weeks = 0):MeetingFactory
     {
@@ -61,7 +61,7 @@ class MeetingFactory extends Factory
     /**
      * Indicate that it is a weekend meeting.
      *
-     * @return \Database\Factories\MeetingFactory
+     * @return \Database\Factories\Schedule\Item\MeetingFactory
      */
     public function weekendMeeting():MeetingFactory
     {

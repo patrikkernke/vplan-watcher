@@ -4,6 +4,7 @@ namespace Tests\Unit\GoogleSheet;
 
 use App\Models\Meeting;
 use App\Models\Schedule\Item\CircuitOverseerTalk;
+use App\Models\Schedule\Item\Congress;
 use App\Models\Schedule\Item\PublicTalk;
 use App\GoogleSheet\GuestTalksSheet\Column;
 use App\GoogleSheet\Normalizer;
@@ -102,15 +103,16 @@ class GuestTalksSheetImporterTest extends TestCase
         $count = collect($normalizedResponse)->filter(function($row) {
             return $row[Column::TYPE] === "Kongress";
         })->count();
-
         // Act
         (new SheetImporter($normalizedResponse))->import();
-
         // Assert
-        $this->assertDatabaseCount('congresses', $count);
+        $meetings = Meeting::where('type', 'Kongress')->get();
+        $this->assertCount($count, $meetings);
+        foreach ($meetings as $meeting) {
+            $this->assertCount(1, $meeting->schedule());
+            $this->assertInstanceOf(Congress::class, $meeting->schedule()->first());
+        }
     }
-
-
 
     /**
      * Helper to get a dummy response from the file

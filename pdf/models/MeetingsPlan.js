@@ -7,39 +7,29 @@ class MeetingsPlan extends PdfPlan
         let blocks = [];
 
         data.forEach(meeting => {
-            const renderBlock = new MeetingBlock();
+            let block = null;
 
-            renderBlock.withData({
-                date: meeting.date,
-                chairman: meeting.chairman,
-                reader: (meeting.schedule[1] && meeting.schedule[1].type === 'WatchtowerStudy')
-                    ? meeting.schedule[1].reader
-                    : null,
-                topic: meeting.schedule[0].topic,
-            });
-
-            if (meeting.schedule[0].type === 'PublicTalk' || meeting.schedule[0].type === 'SpecialTalk') {
-                const speaker = meeting.schedule[0].speaker || '--';
-                const congregation = meeting.schedule[0].congregation || '--';
-                renderBlock.withData({ subtopic: `${speaker}, ${congregation}` });
+            switch (meeting.type) {
+                case 'Kongress':
+                    block = this._congressBlock(meeting);
+                    break;
+                case 'Sondervortrag':
+                    block = this._specialTalkBlock(meeting);
+                    break;
+                case 'Gedächtnismahl':
+                    block = this._memorialBlock(meeting);
+                    break;
+                case 'Dienstwoche':
+                    block = this._circuitOverseerTalkBlock(meeting);
+                    break;
+                case 'Öffentliche Zusammenkunft':
+                    block = this._publicTalkBlock(meeting);
+                    break;
+                default:
+                    break;
             }
 
-            if (meeting.schedule[0].type === 'CircuitOverseerTalk') {
-                const circuitOverseer = meeting.schedule[0].circuitOverseer || '--'
-                renderBlock.withData({ subtopic: `${circuitOverseer}, Kreisaufseher` });
-            }
-
-            if (meeting.schedule[0].type === 'SpecialTalk') {
-                renderBlock.withColorStyle('#6D28D9');
-                renderBlock.withData({ label: 'Sondervortrag'})
-            }
-
-            if (meeting.schedule[0].type === 'CircuitOverseerTalk') {
-                renderBlock.withColorStyle('#047857');
-                renderBlock.withData({ label: 'Dienstwoche'})
-            }
-
-            blocks.push(renderBlock);
+            blocks.push(block);
         })
 
         return blocks;
@@ -72,6 +62,93 @@ class MeetingsPlan extends PdfPlan
             .setFontSize(9)
             .setTextColor('#000000')
             .text(subtitle, settings.margin.left, 30);
+    }
+
+    _publicTalkBlock(meeting)
+    {
+        const renderBlock = new MeetingBlock();
+        const speaker = meeting.schedule[0].speaker || '--';
+        const congregation = meeting.schedule[0].congregation || '--';
+        const hasWatchtowerStudy = (meeting.schedule[1] && meeting.schedule[1].type === 'WatchtowerStudy');
+        const reader = hasWatchtowerStudy ? meeting.schedule[1].reader : null;
+
+        renderBlock.withData({
+            date: meeting.date,
+            chairman: meeting.chairman || '--',
+            reader: reader || '--',
+            topic: meeting.schedule[0].topic,
+            subtopic: `${speaker}, ${congregation}`
+        });
+
+        return renderBlock;
+    }
+
+    _circuitOverseerTalkBlock(meeting)
+    {
+        const renderBlock = new MeetingBlock();
+        const circuitOverseer = meeting.schedule[0].circuitOverseer || '--'
+        const hasWatchtowerStudy = (meeting.schedule[1] && meeting.schedule[1].type === 'WatchtowerStudy');
+
+        renderBlock.withData({
+            date: meeting.date,
+            label: 'Dienstwoche',
+            chairman: meeting.chairman || '--',
+            reader: hasWatchtowerStudy ? meeting.schedule[1].reader : null,
+            topic: meeting.schedule[0].topic,
+            subtopic: `${circuitOverseer}, Kreisaufseher`
+        }).withColorStyle('#6D28D9');
+
+        return renderBlock;
+    }
+
+    _memorialBlock(meeting)
+    {
+        const renderBlock = new MeetingBlock();
+        const speaker = meeting.schedule[0].speaker || '--';
+        const congregation = meeting.schedule[0].congregation || '--';
+
+        renderBlock.withData({
+            date: meeting.date,
+            label: meeting.type,
+            chairman: meeting.chairman || '--',
+            topic: meeting.schedule[0].topic,
+            subtopic: `${speaker}, ${congregation}`
+        }).withColorStyle('#BE185D');
+
+        return renderBlock;
+    }
+
+    _specialTalkBlock(meeting)
+    {
+        const renderBlock = new MeetingBlock();
+        const speaker = meeting.schedule[0].speaker || '--';
+        const congregation = meeting.schedule[0].congregation || '--';
+        const hasWatchtowerStudy = (meeting.schedule[1] && meeting.schedule[1].type === 'WatchtowerStudy');
+        const reader = hasWatchtowerStudy ? meeting.schedule[1].reader : null;
+
+        renderBlock.withData({
+            date: meeting.date,
+            label: meeting.type,
+            chairman: meeting.chairman || '--',
+            reader: reader || '--',
+            topic: meeting.schedule[0].topic,
+            subtopic: `${speaker}, ${congregation}`
+        }).withColorStyle('#B45309');
+
+        return renderBlock;
+    }
+
+    _congressBlock(meeting)
+    {
+        const block = new MeetingBlock();
+
+        block.withData({
+            date: meeting.date,
+            label: 'Kongress',
+            topic: meeting.schedule[0].motto,
+        }).withColorStyle('#047857');
+
+        return block;
     }
 }
 

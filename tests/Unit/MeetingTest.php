@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Meeting;
 use App\Models\Schedule\Item\CircuitOverseerTalk;
+use App\Models\Schedule\Item\Congress;
 use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
@@ -32,7 +33,6 @@ class MeetingTest extends TestCase
     public function it_can_store_the_chairman_optionally()
     {
         $meeting = Meeting::create([
-
             'startAt' => '2021-02-12 13:00:00',
             'type' => 'Öffentliche Zusammenkunft'
         ]);
@@ -44,6 +44,19 @@ class MeetingTest extends TestCase
             'startAt' => $meeting->startAt,
             'chairman' => $meeting->chairman
         ]);
+    }
+
+    /** @test */
+    public function it_can_filter_by_week_difference()
+    {
+        // Arrange
+        $first = Meeting::factory()->create(['startAt' => now()]);
+        $second = Meeting::factory()->create(['startAt' => now()->subWeeks(5)->toDateTimeString()]);
+        $third = Meeting::factory()->create(['startAt' => now()->addWeeks(5)->toDateTimeString()]);
+        // Act
+        $meetings = Meeting::allAfter(now()->subWeeks(4))->get();
+        // Assert
+        $this->assertCount(2, $meetings);
     }
 
     /**
@@ -108,6 +121,7 @@ class MeetingTest extends TestCase
         $data = $meeting->exportForPdfSource();
         // Assert
         $this->assertIsArray($data);
+        $this->assertEquals($meeting->type, $data['type']);
         $this->assertEquals($meeting->startAt->translatedFormat('d. M'), $data['date']);
         $this->assertEquals($meeting->chairman, $data['chairman']);
         $this->assertArrayHasKey('schedule', $data);
@@ -125,6 +139,7 @@ class MeetingTest extends TestCase
             'WatchtowerStudy' => [WatchtowerStudy::class],
             'SpecialTalk' => [SpecialTalk::class],
             'CircuitOverseerTalk' => [CircuitOverseerTalk::class],
+            'Congress' => [Congress::class],
         ];
     }
 }

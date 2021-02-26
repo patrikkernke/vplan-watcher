@@ -6,7 +6,7 @@ use App\Models\Schedule\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use ReflectionClass;
 
-class CircuitOverseerTalk extends ScheduleItem
+class Congress extends ScheduleItem
 {
     use HasFactory;
 
@@ -20,8 +20,10 @@ class CircuitOverseerTalk extends ScheduleItem
     {
         return [
             'type' => (new ReflectionClass($this))->getShortName(),
-            'circuitOverseer' => $this->circuitOverseer,
-            'topic' => $this->topic,
+            'date' => $this->startAt->translatedFormat('d. M'),
+            'motto_id' => $this->motto_id,
+            'motto' => $this->motto,
+            'part' => $this->part,
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Meeting;
 use App\Models\Schedule\Item\CircuitOverseerTalk;
+use App\Models\Schedule\Item\Congress;
 use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
@@ -26,7 +27,7 @@ class PdfDataSeeder extends Seeder
         $this->createWeekendMeetingWithCircuitOverseerTalk(-5);
         $this->createDefaultWeekendMeeting(-4);
         $this->createDefaultWeekendMeeting(-3);
-        $this->createDefaultWeekendMeeting(-2);
+        $this->createCongress(-2);
         $this->createDefaultWeekendMeeting(-1);
         $this->createDefaultWeekendMeeting(1);
         $this->createWeekendMeetingWithSpecialTalk(2);
@@ -37,7 +38,7 @@ class PdfDataSeeder extends Seeder
         $this->createWeekendMeetingWithCircuitOverseerTalk(7);
         $this->createDefaultWeekendMeeting(8);
         $this->createDefaultWeekendMeeting(9);
-        $this->createDefaultWeekendMeeting(10);
+        $this->createCongress(10);
     }
 
     /**
@@ -81,5 +82,14 @@ class PdfDataSeeder extends Seeder
         return $meeting
             ->addToSchedule(CircuitOverseerTalk::factory()->atTime($meeting->startAt->copy())->create())
             ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->startAt->copy()->addMinutes(35))->create(['reader' => null]));
+    }
+
+    protected function createCongress(int $weeks):Meeting
+    {
+        $meeting = Meeting::factory()
+            ->atWeekFromNow($weeks)
+            ->create();
+
+        return $meeting->addToSchedule(Congress::factory()->atTime($meeting->startAt->copy())->create());
     }
 }

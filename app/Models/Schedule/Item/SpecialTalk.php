@@ -12,6 +12,10 @@ class SpecialTalk extends ScheduleItem
 
     protected $guarded = [];
 
+    protected $casts = [
+        'startAt' => 'datetime:Y-m-d H:i'
+    ];
+
     public function exportForPdfSource():array
     {
         return [

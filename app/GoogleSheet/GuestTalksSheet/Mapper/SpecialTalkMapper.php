@@ -15,7 +15,7 @@ class SpecialTalkMapper implements Mapper
     static public function map($row)
     {
         $meeting = Meeting::create([
-            'type'     => 'Öffentliche Zusammenkunft',
+            'type'     => 'Sondervortrag',
             'startAt'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
             'chairman' => $row[Column::CHAIRMAN]
         ]);

@@ -16,6 +16,8 @@ class CreateCongressesTable extends Migration
         Schema::create('congresses', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedInteger('meeting_id')->nullable();
+
             $table->dateTime('startAt');
             $table->string('motto_id')->nullable();
             $table->string('motto')->nullable();

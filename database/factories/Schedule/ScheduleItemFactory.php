@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Schedule;
 
-use App\Models\Schedule\Item\Schedule\Item\ScheduleItem;
+use App\Models\Schedule\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ScheduleItemFactory extends Factory

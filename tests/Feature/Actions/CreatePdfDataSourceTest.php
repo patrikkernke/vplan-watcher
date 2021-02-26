@@ -3,12 +3,8 @@
 namespace Tests\Feature\Actions;
 
 use App\Actions\CreatePdfDataSource;
-use App\Models\Meeting;
-use App\Models\Schedule\Item\PublicTalk;
-use App\Models\Schedule\Item\WatchtowerStudy;
 use Database\Seeders\PdfDataSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -31,5 +27,6 @@ class CreatePdfDataSourceTest extends TestCase
         $storage->assertExists('weekend-meetings.json');
         $json = $storage->get('weekend-meetings.json');
         $this->assertJson($json);
+        $this->assertIsArray(json_decode($json));
     }
 }
