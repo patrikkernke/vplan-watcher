@@ -1,7 +1,7 @@
 const fs = require("fs")
 
-class MeetingBlock {
-
+class MeetingBlock
+{
     constructor()
     {
         this._doc = null;
@@ -22,7 +22,6 @@ class MeetingBlock {
 
         this._safeSpace = 2;
         this._lineSpace = 1.5;
-        this._textHeight = 2.5;
     }
 
     /**
@@ -87,14 +86,14 @@ class MeetingBlock {
 
         // this._renderBackground();
 
-        const firstLineY = this._safeSpace + this._textHeight;
-        const secondLineY = firstLineY + this._textHeight + this._lineSpace;
-        const thirdLineY = secondLineY + this._textHeight + this._lineSpace;
+        const firstLineY = this._safeSpace + this._textHeight();
+        const secondLineY = firstLineY + this._textHeight() + this._lineSpace;
+        const thirdLineY = secondLineY + this._textHeight() + this._lineSpace;
 
         this._renderDate(0, firstLineY);
         this._renderVerticalLine(16);
 
-        if (this._data.label) this._renderLabel(20, firstLineY);
+        if (this._data.label) this._renderLabel(16, 0);
         this._renderTopic(20, this._data.label ? secondLineY : firstLineY);
         if (this._data.subtopic) this._renderSubtopic(20, this._data.label ? thirdLineY : secondLineY);
 
@@ -111,7 +110,7 @@ class MeetingBlock {
         if (this._data.date || this._data.topic) countLines += 1;
         if (this._data.subtopic || this._data.reader) countLines += 1;
 
-        const sumTextHeight = countLines * this._textHeight;
+        const sumTextHeight = countLines * this._textHeight();
         const sumLineSpace = (countLines - 1) * this._lineSpace;
 
         return sumTextHeight + sumLineSpace + this._safeSpace*2 ;
@@ -147,7 +146,7 @@ class MeetingBlock {
     {
         this._doc
             .setLineWidth(0.35)
-            .setDrawColor(this._color.base)
+            .setDrawColor(this._color.primary)
             .line(
                 this._x(x), this._y(),
                 this._x(x), this._y(this.height)
@@ -156,14 +155,28 @@ class MeetingBlock {
 
     _renderLabel(x, y)
     {
+        const label = this._data.label.toUpperCase();
+        const charSpace = 0.2;
+        const fontSize = 6;
+        const pointsToMillimeterFactor = 72/25.6;
+        const labelWidth = this._doc.getStringUnitWidth(label) * fontSize / pointsToMillimeterFactor + label.length * charSpace;
+
+        this._doc.setFillColor(this._color.primary).rect(
+            this._x(x + 0.1),
+            this._y(y),
+            4 + labelWidth + 2,
+            2 + this._lineSpace,
+            'F'
+        );
+
         this._doc
             .setFont('Inter', 'bold')
-            .setFontSize(7)
-            .setTextColor(this._color.primary)
+            .setFontSize(fontSize)
+            .setTextColor('#FFFFFF')
             .text(
-                this._data.label.toUpperCase(),
-                this._x(x), this._y(y),
-                { charSpace: 0.1}
+                label,
+                this._x(x + 4), this._y(y + this._textHeight(fontSize) + this._lineSpace / 2),
+                { charSpace: charSpace }
             );
     }
 
@@ -189,8 +202,8 @@ class MeetingBlock {
         this._doc.addImage(
             this._imageData(filename),
             'PNG',
-            this._x(x), this._y(y - 0.6 - this._textHeight),
-            this._textHeight + 1.2, this._textHeight + 1.2
+            this._x(x), this._y(y - 0.6 - this._textHeight()),
+            this._textHeight() + 1.2, this._textHeight() + 1.2
         );
     }
 
@@ -238,9 +251,17 @@ class MeetingBlock {
         return this._data;
     }
 
-    _imageData(image) {
+    _imageData(image)
+    {
         const imageData = fs.readFileSync(`./pdf/images/${image}`);
         return `data:image/png;base64,${imageData.toString('base64')}`
+    }
+
+    _textHeight(fontSize = 9)
+    {
+        const sizeFactor = 2.5 / 9;
+
+        return fontSize * sizeFactor;
     }
 }
 

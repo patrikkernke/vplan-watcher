@@ -1,12 +1,12 @@
 const PdfPlan = require("./PdfPlan")
 const MeetingBlock = require('./Renderer/MeetingBlock')
 
-class MeetingsPlan extends PdfPlan {
-
-    contentBlocks() {
+class MeetingsPlan extends PdfPlan
+{
+    contentBlocks(data) {
         let blocks = [];
 
-        this._data.forEach(meeting => {
+        data.forEach(meeting => {
             const renderBlock = new MeetingBlock();
 
             renderBlock.withData({

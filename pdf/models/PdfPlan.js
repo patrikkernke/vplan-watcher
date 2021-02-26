@@ -5,7 +5,7 @@ require('../fonts/Inter-bold');
 
 class PdfPlan
 {
-    constructor(data)
+    constructor()
     {
         this._doc = new jsPDF({
             orientation: 'portrait',
@@ -14,7 +14,7 @@ class PdfPlan
             putOnlyUsedFonts: true,
         });
 
-        this._data = data;
+        this._data = [];
         this._contentGroups = [];
 
         this._settings = {
