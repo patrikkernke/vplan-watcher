@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\GoogleSheet\GuestTalksSheet;
+namespace App\GoogleSheet\ServiceMeetingSheet;
 
 /**
  * Class Column
@@ -13,12 +13,4 @@ namespace App\GoogleSheet\GuestTalksSheet;
 class Column
 {
     const DATE = 0;
-    const TYPE = 1;
-    const SPEAKER = 2;
-    const CONGREGATION = 3;
-    const DISPOSITION = 4;
-    const TOPIC = 5;
-    const CHAIRMAN = 6;
-    const READER = 7;
-    const AWAY_SPEAKER = 8;
 }

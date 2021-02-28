@@ -8,11 +8,11 @@ class Importer
     private $rawValues;
 
     private $mapper = [
-        'Vortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper::class,
-        'Kongress' => \App\GoogleSheet\GuestTalksSheet\Mapper\CongressMapper::class,
-        'GM' => \App\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeetingMapper::class,
-        'Sondervortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalkMapper::class,
-        'Dienstwoche' => \App\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
+        'Vortrag' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\PublicTalkMapper::class,
+        'Kongress' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\CongressMapper::class,
+        'GM' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\MemorialMeetingMapper::class,
+        'Sondervortrag' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\SpecialTalkMapper::class,
+        'Dienstwoche' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
     ];
 
     public function __construct($rawValues)
@@ -25,7 +25,7 @@ class Importer
         $this->rawValues->each(function($row) {
 
             if (empty($row[Column::DATE])) {
-                true; // continue loop
+                return true; // continue loop
             }
 
             $rowType = $row[Column::TYPE];

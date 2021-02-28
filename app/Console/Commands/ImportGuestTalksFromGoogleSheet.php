@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\GoogleSheet\Connector;
-use App\GoogleSheet\GuestTalksSheet\Importer;
+use App\GoogleSheet\ServiceMeetingSheet\Importer;
 use App\GoogleSheet\Normalizer;
 use Illuminate\Console\Command;
 use Storage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GoogleSheet\GuestTalksSheet\Mapper;
+namespace App\GoogleSheet\ServiceMeetingSheet\Mapper;
 
 interface Mapper
 {
