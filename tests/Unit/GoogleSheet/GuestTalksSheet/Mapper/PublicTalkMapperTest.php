@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\GoogleSheet\GuestTalksSheet\Mapper;
 
-use App\GoogleSheet\ServiceMeetingSheet\Column;
-use App\GoogleSheet\ServiceMeetingSheet\Mapper\PublicTalkMapper;
+use App\GoogleSheet\GuestTalksSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper;
 use App\Models\Meeting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

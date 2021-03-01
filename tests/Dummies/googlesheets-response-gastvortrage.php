@@ -294,15 +294,19 @@ return array (
   array (
     0 => '12.07.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Freitag Vormittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Freitag Vormittag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   29 => 
   array (
     0 => '19.07.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Freitag Nachmittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Freitag Nachmitag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   30 => 
   array (
@@ -319,15 +323,19 @@ return array (
   array (
     0 => '02.08.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Samstag Vormittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Samstag Vormittag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   32 => 
   array (
     0 => '09.08.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Samstag Nachmittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Samstag Nachmittag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   33 => 
   array (
@@ -344,15 +352,19 @@ return array (
   array (
     0 => '23.08.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Sonntag Vormittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Sonntag Vormittag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   35 => 
   array (
     0 => '30.08.20 00:00',
     1 => 'Kongress',
-    2 => 'RK Sonntag Nachmittag',
-    3 => 'Stream',
+    2 => '',
+    3 => 'RK Sonntag Nachmittag',
+    4 => 'co-pgm20',
+    5 => '„Freut euch immer“',
   ),
   36 => 
   array (
@@ -559,8 +571,10 @@ return array (
   array (
     0 => '09.01.21 00:00',
     1 => 'Kongress',
-    2 => 'Kongress mit Kreisaufseher',
-    3 => 'Stream',
+    2 => '',
+    3 => '',
+    4 => 'ca-copgm21',
+    5 => 'Machen wir Jehovas Herz Freude!',
   ),
   55 => 
   array (
@@ -688,7 +702,6 @@ return array (
     4 => 'S-31',
     5 => 'Sei dankbar für das, was Gott und Christus für dich getan haben!',
     6 => 'D. Jung',
-    7 => 'A. Vilic',
   ),
   66 => 
   array (
@@ -697,7 +710,7 @@ return array (
     2 => 'Uwe Ackermann',
     3 => '',
     4 => 'd421',
-    5 => 'Dienstwoche',
+    5 => 'Öffentlicher Vortrag',
     6 => 'A. Flach',
     7 => 'D. Schirk',
   ),
@@ -753,8 +766,10 @@ return array (
   array (
     0 => '09.05.21 10:00',
     1 => 'Kongress',
-    2 => 'Kongress mit Vertreter',
-    3 => 'Stream',
+    2 => '',
+    3 => '',
+    4 => 'ca-brpgm21',
+    5 => '„Habt Freude an Jehova“',
   ),
   72 => 
   array (
@@ -942,7 +957,7 @@ return array (
     0 => '19.09.21 10:00',
     1 => 'Vortrag',
     2 => 'Juan Frigols',
-    3 => 'Köln-Spansich',
+    3 => 'Köln-Spanisch',
     4 => '?',
     5 => '////////////////      VORTRAGSTHEMA FOLGT     ////////////////',
   ),

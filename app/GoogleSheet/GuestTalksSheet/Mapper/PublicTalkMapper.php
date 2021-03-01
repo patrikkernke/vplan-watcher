@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\GoogleSheet\ServiceMeetingSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 
-use App\GoogleSheet\ServiceMeetingSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 
 use App\Models\Meeting;
 use App\Models\Schedule\Item\PublicTalk;
@@ -12,7 +12,7 @@ use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-class PublicTalkMapper implements Mapper
+class PublicTalkMapper implements MapperInterface
 {
     static public function map($row)
     {

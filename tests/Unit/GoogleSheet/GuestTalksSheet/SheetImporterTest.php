@@ -3,18 +3,18 @@
 namespace Tests\Unit\GoogleSheet;
 
 use App\Models\Meeting;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\Schedule\Item\CircuitOverseerTalk;
 use App\Models\Schedule\Item\Congress;
 use App\Models\Schedule\Item\PublicTalk;
-use App\GoogleSheet\ServiceMeetingSheet\Column;
 use App\GoogleSheet\Normalizer;
-use App\GoogleSheet\ServiceMeetingSheet\Importer as SheetImporter;
+use App\GoogleSheet\GuestTalksSheet\SheetImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 
-class GuestTalksSheetImporterTest extends TestCase
+class SheetImporterTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,7 +24,16 @@ class GuestTalksSheetImporterTest extends TestCase
     private $dummyResponse = [];
 
     /** @test */
-    public function it_creates_public_talks()
+    public function it_has_connection_data_for_the_belonging_google_sheet()
+    {
+        // Assert
+        $this->assertNotEmpty(SheetImporter::SPREADSHEET_ID);
+        $this->assertNotEmpty(SheetImporter::SHEETNAME);
+        $this->assertNotEmpty(SheetImporter::RANGE);
+    }
+
+    /** @test */
+    public function it_imports_public_talks()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
 
@@ -34,7 +43,7 @@ class GuestTalksSheetImporterTest extends TestCase
 
         (new SheetImporter($normalizedResponse))->import();
 
-        //** todo@pk -> test über Objekt statt datenbank */
+        //** todo@pk -> Test über Objekt statt Datenbank */
         $publicTalks->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
                 'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[Column::DATE])->toDateTimeString(),
@@ -45,7 +54,7 @@ class GuestTalksSheetImporterTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_memorial_meetings()
+    public function it_imports_memorial_meetings()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
@@ -65,7 +74,7 @@ class GuestTalksSheetImporterTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_special_talks_for_memorials()
+    public function it_imports_special_talks_for_memorials()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $count = collect($normalizedResponse)->filter(function($row) {
@@ -78,7 +87,7 @@ class GuestTalksSheetImporterTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_circuit_overseer_public_talk()
+    public function it_imports_circuit_overseer_public_talk()
     {
         $normalizedResponse = $this->getNormalizedDummyResponse();
         $circuitOverseerPublicTalksRaw = collect($normalizedResponse)->filter(function($row) {
@@ -96,7 +105,7 @@ class GuestTalksSheetImporterTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_congresses()
+    public function it_imports_congresses()
     {
         // Arrange
         $normalizedResponse = $this->getNormalizedDummyResponse();
@@ -117,13 +126,13 @@ class GuestTalksSheetImporterTest extends TestCase
     /**
      * Helper to get a dummy response from the file
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getNormalizedDummyResponse():Collection
     {
         if (empty($this->dummyResponse)) {
             $this->dummyResponse = Normalizer::cleanUp(
-                require base_path('tests/Dummies/googlesheets-public-talks-response.php')
+                require base_path('tests/Dummies/googlesheets-response-gastvortrage.php')
             );
         }
 

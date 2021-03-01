@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\GoogleSheet\ServiceMeetingSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
-use App\GoogleSheet\ServiceMeetingSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\Meeting;
 use App\Models\Schedule\Item\Congress;
 use Illuminate\Support\Carbon;
 
-class CongressMapper implements Mapper
+class CongressMapper implements MapperInterface
 {
     public static function map($row)
     {

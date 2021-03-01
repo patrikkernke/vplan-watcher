@@ -16,7 +16,7 @@ class CreateCircuitOverseerTalksTable extends Migration
         Schema::create('circuit_overseer_talks', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('meeting_id')->nullable();
+            $table->foreignid('meeting_id')->nullable();
 
             $table->dateTime('startAt');
             $table->string('circuitOverseer')->nullable();

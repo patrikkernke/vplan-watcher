@@ -3,16 +3,20 @@
 
 namespace App\GoogleSheet\GuestTalksSheet;
 
-class Importer
+class SheetImporter
 {
+    const SPREADSHEET_ID = '1eqwBV8UuYmWQLmpZrgElr0QL2iiBQetjrHDgikSg1CY';
+    const SHEETNAME = 'Gastvorträge';
+    const RANGE = 'C:K';
+
     private $rawValues;
 
     private $mapper = [
-        'Vortrag' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\PublicTalkMapper::class,
-        'Kongress' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\CongressMapper::class,
-        'GM' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\MemorialMeetingMapper::class,
-        'Sondervortrag' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\SpecialTalkMapper::class,
-        'Dienstwoche' => \App\GoogleSheet\ServiceMeetingSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
+        'Vortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper::class,
+        'Kongress' => \App\GoogleSheet\GuestTalksSheet\Mapper\CongressMapper::class,
+        'GM' => \App\GoogleSheet\GuestTalksSheet\Mapper\MemorialMeetingMapper::class,
+        'Sondervortrag' => \App\GoogleSheet\GuestTalksSheet\Mapper\SpecialTalkMapper::class,
+        'Dienstwoche' => \App\GoogleSheet\GuestTalksSheet\Mapper\CircuitOverseerPublicTalkMapper::class,
     ];
 
     public function __construct($rawValues)

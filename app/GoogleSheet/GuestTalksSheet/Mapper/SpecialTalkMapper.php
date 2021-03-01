@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\GoogleSheet\ServiceMeetingSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 
-use App\GoogleSheet\ServiceMeetingSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\Meeting;
 use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Support\Carbon;
 
-class SpecialTalkMapper implements Mapper
+class SpecialTalkMapper implements MapperInterface
 {
     static public function map($row)
     {

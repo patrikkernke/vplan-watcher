@@ -9,26 +9,23 @@ use Tests\TestCase;
 class NormalizerTest extends TestCase
 {
     /**
-     * @var array
+     * @test
+     * @dataProvider googleSheetResponses
      */
-    private $dummyResponse = [];
-
-    /** @test */
-    public function it_returns_a_collection()
+    public function it_returns_a_collection($response)
     {
-        // Arrange
-        $response = $this->getDummyResponse();
         // Act
         $collection = Normalizer::cleanUp($response);
         // Assert
         $this->assertInstanceOf(Collection::class, $collection);
     }
 
-    /** @test */
-    public function it_converts_empty_values_to_null()
+    /**
+     * @test
+     * @dataProvider googleSheetResponses
+     */
+    public function it_converts_empty_values_to_null($response)
     {
-        // Arrange
-        $response = $this->getDummyResponse();
         // Act
         $collection = Normalizer::cleanUp($response);
         // Assert
@@ -38,11 +35,12 @@ class NormalizerTest extends TestCase
         $this->assertCount(0, $rowsWithEmptyStrings);
     }
 
-    /** @test */
-    public function it_trims_string_values()
+    /**
+     * @test
+     * @dataProvider googleSheetResponses
+     */
+    public function it_trims_string_values($response)
     {
-        // Arrange
-        $response = $this->getDummyResponse();
         array_push($response, ['    column1   ', 'column2 ', '     column3',]);
         // Act
         $collection = Normalizer::cleanUp($response);
@@ -52,11 +50,13 @@ class NormalizerTest extends TestCase
         $this->assertEquals('column3', $collection->last()[2]);
     }
 
-    /** @test */
-    public function it_removes_the_header_row()
+    /**
+     * @test
+     * @dataProvider googleSheetResponses
+     */
+    public function it_removes_the_header_row($response)
     {
         // Arrange
-        $response = $this->getDummyResponse();
         $headerRow = collect($response)->first();
         // Act
         $collection = Normalizer::cleanUp($response);
@@ -64,11 +64,13 @@ class NormalizerTest extends TestCase
         $this->assertFalse($collection->contains($headerRow));
     }
 
-    /** @test */
-    public function it_adds_empty_columns_if_they_are_missed()
+    /**
+     * @test
+     * @dataProvider googleSheetResponses
+     */
+    public function it_adds_empty_columns_if_they_are_missed($response)
     {
         // Arrange
-        $response = $this->getDummyResponse();
         $neededColumnsCount = count(collect($response)->first());
         // Act
         $collection = Normalizer::cleanUp($response);
@@ -79,16 +81,11 @@ class NormalizerTest extends TestCase
         $this->assertCount(0, $rowsWithToFewColumns);
     }
 
-    /**
-     * Helper to get a dummy response from the file
-     * @return array
-     */
-    public function getDummyResponse():array
+    public function googleSheetResponses()
     {
-        if (empty($this->dummyResponse)) {
-            $this->dummyResponse = require base_path('tests/Dummies/googlesheets-public-talks-response.php');
-        }
-
-        return $this->dummyResponse;
+        return [
+            'Gastvorträge' => [require 'tests/Dummies/googlesheets-response-gastvortrage.php'],
+            'Treffpunkte' => [require 'tests/Dummies/googlesheets-response-treffpunkte.php'],
+        ];
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWatchtowerStudiesTable extends Migration
+class CreateFieldServiceGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateWatchtowerStudiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('watchtower_studies', function (Blueprint $table) {
+        Schema::create('field_service_groups', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('meeting_id')->nullable();
-
-            $table->dateTime('startAt');
-            $table->string('conductor')->nullable();
-            $table->string('reader')->nullable();
+            $table->string('name')->unique();
 
             $table->timestamps();
         });
@@ -33,6 +29,6 @@ class CreateWatchtowerStudiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('watchtower_studies');
+        Schema::dropIfExists('field_service_groups');
     }
 }

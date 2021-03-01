@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\GoogleSheet\ServiceMeetingSheet\Mapper;
+namespace App\GoogleSheet\GuestTalksSheet\Mapper;
 
 
-use App\GoogleSheet\ServiceMeetingSheet\Column;
+use App\GoogleSheet\GuestTalksSheet\Column;
 use App\Models\Meeting;
 use App\Models\MemorialMeeting;
 use App\Models\Schedule\Item\PublicTalk;
 use Illuminate\Support\Carbon;
 
-class MemorialMeetingMapper implements Mapper
+class MemorialMeetingMapper implements MapperInterface
 {
     static public function map($row)
     {
