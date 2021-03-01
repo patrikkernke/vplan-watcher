@@ -38,9 +38,11 @@ class ExportForPdfDocs extends Command
      */
     public function handle()
     {
-        CreatePdfDataSource::weekendMeetings();
-
+        CreatePdfDataSource::forWeekendMeetings();
         $this->info('Data source for WeekendMeetings was created.');
+
+        CreatePdfDataSource::forServiceMeetings();
+        $this->info('Data source for ServiceMeetings was created.');
 
         return 0;
     }

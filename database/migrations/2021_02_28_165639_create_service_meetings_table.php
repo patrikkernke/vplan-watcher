@@ -16,10 +16,10 @@ class CreateServiceMeetingsTable extends Migration
         Schema::create('service_meetings', function (Blueprint $table) {
             $table->id();
 
-            $table->dateTime('startAt');
+            $table->dateTime('start_at');
             $table->string('type');
             $table->string('leader')->nullable();
-            $table->boolean('is_visit_circuit_overseer')->default(FALSE);
+            $table->boolean('is_visit_service_overseer')->default(FALSE);
             $table->foreignId('field_service_group_id')->nullable();
 
             $table->timestamps();

@@ -18,7 +18,7 @@ class CreateWatchtowerStudiesTable extends Migration
 
             $table->foreignId('meeting_id')->nullable();
 
-            $table->dateTime('startAt');
+            $table->dateTime('start_at');
             $table->string('conductor')->nullable();
             $table->string('reader')->nullable();
 

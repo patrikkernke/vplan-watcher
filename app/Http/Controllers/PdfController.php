@@ -10,7 +10,7 @@ class PdfController extends Controller
 {
     public function weekendMeetingSchedule(Fpdf $pdf)
     {
-        $meetings = Meeting::orderBy('startAt')->get();
+        $meetings = Meeting::orderBy('start_at')->get();
 
         $pdf->SetMargins(20,20);
         $pdf->AddPage();
@@ -35,7 +35,7 @@ class PdfController extends Controller
         $pdf->SetFillColor(200, 200, 200);
 
         foreach ($meetings as $meeting) {
-            $pdf->cell(16, 4, utf8_decode($meeting->startAt->translatedFormat('j. M')), 0, 0, 'L', true);
+            $pdf->cell(16, 4, utf8_decode($meeting->start_at->translatedFormat('j. M')), 0, 0, 'L', true);
             $pdf->cell(40, 4, utf8_decode($meeting->schedule()->first()->topic), 0, 0, 'L', true);
             $pdf->Ln();
         }

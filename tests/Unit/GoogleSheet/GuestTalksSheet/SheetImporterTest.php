@@ -46,7 +46,7 @@ class SheetImporterTest extends TestCase
         //** todo@pk -> Test über Objekt statt Datenbank */
         $publicTalks->each(function($talk) {
             $this->assertDatabaseHas('public_talks', [
-                'startAt' => Carbon::createFromFormat('d.m.y H:i', $talk[Column::DATE])->toDateTimeString(),
+                'start_at' => Carbon::createFromFormat('d.m.y H:i', $talk[Column::DATE])->toDateTimeString(),
                 'speaker' => $talk[Column::SPEAKER],
                 'disposition' => $talk[Column::DISPOSITION],
             ]);
@@ -98,7 +98,7 @@ class SheetImporterTest extends TestCase
 
         foreach ($circuitOverseerPublicTalksRaw as $row) {
             $startDate = Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE]);
-            $meetings = Meeting::where('startAt', $startDate->toDateTimeString())->get();
+            $meetings = Meeting::where('start_at', $startDate->toDateTimeString())->get();
             $this->assertCount(1, $meetings);
             $this->assertInstanceOf(CircuitOverseerTalk::class, $meetings->first()->schedule()->first());
         }

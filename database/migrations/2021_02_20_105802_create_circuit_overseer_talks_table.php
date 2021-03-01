@@ -18,7 +18,7 @@ class CreateCircuitOverseerTalksTable extends Migration
 
             $table->foreignid('meeting_id')->nullable();
 
-            $table->dateTime('startAt');
+            $table->dateTime('start_at');
             $table->string('circuitOverseer')->nullable();
             $table->string('topic')->nullable();
 

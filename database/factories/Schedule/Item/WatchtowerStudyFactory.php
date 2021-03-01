@@ -23,7 +23,7 @@ class WatchtowerStudyFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'conductor' => $this->faker->firstName[0] .'. '. $this->faker->lastName,
             'reader' => $this->faker->boolean()
                 ? $this->faker->firstName[0] .'. '. $this->faker->lastName
@@ -35,7 +35,7 @@ class WatchtowerStudyFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($time) {
             return [
-                'startAt' => $time->toDateTimeString()
+                'start_at' => $time->toDateTimeString()
             ];
         });
     }

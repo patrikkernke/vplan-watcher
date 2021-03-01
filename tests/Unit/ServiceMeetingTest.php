@@ -17,13 +17,13 @@ class ServiceMeetingTest extends TestCase
     {
         // Arrange
         $meeting = ServiceMeeting::create([
-            'startAt' => now()->toDateTimeString(),
+            'start_at' => now()->toDateTimeString(),
             'type' => 'congregation'
         ]);
         // Act
-        $startAt = $meeting->startAt;
+        $start_at = $meeting->start_at;
         // Assert
-        $this->assertInstanceOf(Carbon::class, $startAt);
+        $this->assertInstanceOf(Carbon::class, $start_at);
     }
 
     /** @test */
@@ -67,9 +67,9 @@ class ServiceMeetingTest extends TestCase
         // Arrange
         $meeting = ServiceMeeting::factory()->make();
         // Act
-        $meeting->visitCircuitOverseer()->save();
+        $meeting->visitServiceOverseer()->save();
         // Assert
-        $this->assertTrue($meeting->isVisitCircuitOverseer());
+        $this->assertTrue($meeting->isVisitServiceOverseer());
     }
 
     /** @test */
@@ -118,5 +118,50 @@ class ServiceMeetingTest extends TestCase
         $meetings->each(function ($meeting) {
             $this->assertTrue($meeting->isForFieldServiceGroup());
         });
+    }
+
+    /** @test */
+    public function it_can_query_starting_from_given_date()
+    {
+        // Arrange
+        $first = ServiceMeeting::factory()->create(['start_at' => now()]);
+        $second = ServiceMeeting::factory()->create(['start_at' => now()->subWeeks(5)->toDateTimeString()]);
+        $third = ServiceMeeting::factory()->create(['start_at' => now()->addWeeks(5)->toDateTimeString()]);
+        // Act
+        $meetings = ServiceMeeting::after(now()->subWeeks(4))->get();
+        // Assert
+        $this->assertCount(2, $meetings);
+    }
+
+    /** @test */
+    public function it_exports_service_meetings_for_congregation_pdf_generation()
+    {
+        // Arrange
+        $meeting = ServiceMeeting::factory()->forCongregation()->create();
+        // Act
+        $data = $meeting->exportForPdfSource();
+        // Assert
+        $this->assertIsArray($data);
+        $this->assertEquals($meeting->start_at->translatedFormat('d. M'), $data['date']);
+        $this->assertEquals($meeting->start_at->translatedFormat('H:i'), $data['time']);
+        $this->assertEquals($meeting->type, $data['type']);
+        $this->assertEquals($meeting->leader, $data['leader']);
+    }
+
+    /** @test */
+    public function it_exports_service_meetings_for_field_service_group_pdf_generation()
+    {
+        // Arrange
+        $group = FieldServiceGroup::factory()->create();
+        $meeting = ServiceMeeting::factory()->make();
+        $meeting->forFieldServiceGroup($group)->save();
+        // Act
+        $data = $meeting->exportForPdfSource();
+        // Assert
+        $this->assertIsArray($data);
+        $this->assertEquals($meeting->type, $data['type']);
+        $this->assertArrayHasKey('is_visit_service_overseer', $data);
+        $this->assertIsBool($data['is_visit_service_overseer']);
+        $this->assertArrayHasKey('field_service_group', $data);
     }
 }

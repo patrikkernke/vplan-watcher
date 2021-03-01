@@ -23,8 +23,9 @@ class ServiceMeetingFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'type' => 'congregation',
+            'is_visit_service_overseer' => false,
             'leader' => $this->faker->boolean()
                 ? $this->faker->firstName[0] . '. ' . $this->faker->lastName
                 : null,

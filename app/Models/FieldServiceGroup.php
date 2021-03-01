@@ -10,4 +10,11 @@ class FieldServiceGroup extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function exportForPdfSource():array
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
 }

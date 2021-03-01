@@ -14,11 +14,11 @@ class CongressMapper implements MapperInterface
     {
         $meeting = Meeting::create([
             'type'     => 'Kongress',
-            'startAt'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
+            'start_at'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
         ]);
 
         $meeting->addToSchedule(Congress::create([
-            'startAt' => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE]),
+            'start_at' => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE]),
             'motto_id' => $row[Column::DISPOSITION],
             'motto' => $row[Column::TOPIC],
             'part' => $row[Column::CONGREGATION]

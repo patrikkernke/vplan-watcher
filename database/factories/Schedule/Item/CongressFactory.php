@@ -23,7 +23,7 @@ class CongressFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'motto_id' => $this->faker->unique()->randomNumber(3),
             'motto' => $this->faker->sentence(3),
             'part' => $this->faker->randomElement([
@@ -39,7 +39,7 @@ class CongressFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($time) {
             return [
-                'startAt' => $time->toDateTimeString()
+                'start_at' => $time->toDateTimeString()
             ];
         });
     }

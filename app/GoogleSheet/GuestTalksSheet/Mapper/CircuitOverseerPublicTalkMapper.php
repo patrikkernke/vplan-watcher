@@ -16,18 +16,18 @@ class CircuitOverseerPublicTalkMapper implements MapperInterface
     {
         $meeting = Meeting::create([
             'type'     => 'Dienstwoche',
-            'startAt'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
+            'start_at'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
             'chairman' => $row[Column::CHAIRMAN]
         ]);
 
         $meeting->addToSchedule(CircuitOverseerTalk::create([
-            'startAt'         => $meeting->startAt,
+            'start_at'         => $meeting->start_at,
             'circuitOverseer' => $row[Column::SPEAKER],
             'topic'           => $row[Column::TOPIC]
         ]));
 
         $meeting->addToSchedule(WatchtowerStudy::create([
-            'startAt' => $meeting->startAt->copy()->addMinutes(35)
+            'start_at' => $meeting->start_at->copy()->addMinutes(35)
         ]));
     }
 }

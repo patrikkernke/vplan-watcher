@@ -13,14 +13,14 @@ class Congress extends ScheduleItem
     protected $guarded = [];
 
     protected $casts = [
-        'startAt' => 'datetime:Y-m-d H:i'
+        'start_at' => 'datetime:Y-m-d H:i'
     ];
 
     public function exportForPdfSource():array
     {
         return [
             'type' => (new ReflectionClass($this))->getShortName(),
-            'date' => $this->startAt->translatedFormat('d. M'),
+            'date' => $this->start_at->translatedFormat('d. M'),
             'motto_id' => $this->motto_id,
             'motto' => $this->motto,
             'part' => $this->part,

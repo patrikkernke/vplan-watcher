@@ -10,7 +10,7 @@ use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use Illuminate\Database\Seeder;
 
-class PdfDataSeeder extends Seeder
+class PdfDataWeekendMeetingsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -56,8 +56,8 @@ class PdfDataSeeder extends Seeder
             ->create();
 
         return $meeting
-            ->addToSchedule(PublicTalk::factory()->atTime($meeting->startAt->copy())->create())
-            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->startAt->copy()->addMinutes(35))->create());
+            ->addToSchedule(PublicTalk::factory()->atTime($meeting->start_at->copy())->create())
+            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->start_at->copy()->addMinutes(35))->create());
     }
 
     protected function createWeekendMeetingWithSpecialTalk(int $weeks):Meeting
@@ -68,8 +68,8 @@ class PdfDataSeeder extends Seeder
             ->create();
 
         return $meeting
-            ->addToSchedule(SpecialTalk::factory()->atTime($meeting->startAt->copy())->create())
-            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->startAt->copy()->addMinutes(35))->create());
+            ->addToSchedule(SpecialTalk::factory()->atTime($meeting->start_at->copy())->create())
+            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->start_at->copy()->addMinutes(35))->create());
     }
 
     protected function createWeekendMeetingWithCircuitOverseerTalk(int $weeks):Meeting
@@ -80,8 +80,8 @@ class PdfDataSeeder extends Seeder
             ->create();
 
         return $meeting
-            ->addToSchedule(CircuitOverseerTalk::factory()->atTime($meeting->startAt->copy())->create())
-            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->startAt->copy()->addMinutes(35))->create(['reader' => null]));
+            ->addToSchedule(CircuitOverseerTalk::factory()->atTime($meeting->start_at->copy())->create())
+            ->addToSchedule(WatchtowerStudy::factory()->atTime($meeting->start_at->copy()->addMinutes(35))->create(['reader' => null]));
     }
 
     protected function createCongress(int $weeks):Meeting
@@ -90,6 +90,6 @@ class PdfDataSeeder extends Seeder
             ->atWeekFromNow($weeks)
             ->create();
 
-        return $meeting->addToSchedule(Congress::factory()->atTime($meeting->startAt->copy())->create());
+        return $meeting->addToSchedule(Congress::factory()->atTime($meeting->start_at->copy())->create());
     }
 }

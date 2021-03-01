@@ -13,7 +13,7 @@ class WatchtowerStudy extends ScheduleItem
     protected $guarded = [];
 
     protected $casts = [
-        'startAt' => 'datetime:Y-m-d H:s'
+        'start_at' => 'datetime:Y-m-d H:s'
     ];
 
     public function exportForPdfSource():array

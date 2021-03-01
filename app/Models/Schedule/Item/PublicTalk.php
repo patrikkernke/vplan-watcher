@@ -13,7 +13,7 @@ class PublicTalk extends ScheduleItem
     protected $guarded = [];
 
     protected $casts = [
-        'startAt' => 'datetime:Y-m-d H:i'
+        'start_at' => 'datetime:Y-m-d H:i'
     ];
 
     public function exportForPdfSource():array

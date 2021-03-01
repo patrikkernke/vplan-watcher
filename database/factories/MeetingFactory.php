@@ -23,7 +23,7 @@ class MeetingFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'chairman' => $this->faker->boolean
                 ? $this->faker->firstName[0] .". ". $this->faker->lastName
                 : null,
@@ -49,7 +49,7 @@ class MeetingFactory extends Factory
 
         return $this->state(function (array $attributes) use ($weekMethod, $weeks) {
             return [
-                'startAt' => now()
+                'start_at' => now()
                     ->endOfWeek(Carbon::SUNDAY)
                     ->setTime(10, 0, 0, 0)
                     ->$weekMethod($weeks * 7)

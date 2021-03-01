@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CanQueryMeetings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,12 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ServiceMeeting extends Model
 {
-    use HasFactory;
+    use HasFactory, CanQueryMeetings;
 
     protected $guarded = [];
 
     protected $casts = [
-        'startAt' => 'datetime: Y-m-d H:i'
+        'start_at' => 'datetime: Y-m-d H:i'
     ];
 
     /**
@@ -67,15 +68,15 @@ class ServiceMeeting extends Model
         return $this->type === 'service_week';
     }
 
-    public function visitCircuitOverseer(): ServiceMeeting
+    public function visitServiceOverseer(): ServiceMeeting
     {
-        $this->is_visit_circuit_overseer = true;
+        $this->is_visit_service_overseer = true;
         return $this;
     }
 
-    public function isVisitCircuitOverseer(): bool
+    public function isVisitServiceOverseer(): bool
     {
-        return $this->is_visit_circuit_overseer;
+        return $this->is_visit_service_overseer;
     }
 
     /**
@@ -97,5 +98,29 @@ class ServiceMeeting extends Model
     public function scopeOnlyForFieldServiceGroup($query): Builder
     {
         return $query->where('type', 'field_service_group');
+    }
+
+    /**
+     * --------------
+     * Exporter
+     * --------------
+     */
+    public function exportForPdfSource():array
+    {
+        $baseExport = collect([
+            'type' => $this->type,
+            'date' => $this->start_at->translatedFormat('d. M'),
+            'time' => $this->start_at->translatedFormat('H:i'),
+            'leader' => $this->leader,
+        ]);
+
+        if ($this->isForFieldServiceGroup()) {
+            $baseExport = $baseExport->merge([
+                'is_visit_service_overseer' => $this->is_visit_service_overseer,
+                'field_service_group' => $this->fieldServiceGroup->exportForPdfSource()
+            ]);
+        }
+
+        return $baseExport->toArray();
     }
 }

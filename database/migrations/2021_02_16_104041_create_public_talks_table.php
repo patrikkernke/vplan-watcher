@@ -18,7 +18,7 @@ class CreatePublicTalksTable extends Migration
 
             $table->foreignId('meeting_id')->nullable();
 
-            $table->dateTime('startAt');
+            $table->dateTime('start_at');
             $table->string('speaker')->nullable();
             $table->string('congregation')->nullable();
             $table->string('disposition')->nullable();

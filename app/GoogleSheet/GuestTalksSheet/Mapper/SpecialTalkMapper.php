@@ -16,12 +16,12 @@ class SpecialTalkMapper implements MapperInterface
     {
         $meeting = Meeting::create([
             'type'     => 'Sondervortrag',
-            'startAt'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
+            'start_at'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
             'chairman' => $row[Column::CHAIRMAN]
         ]);
 
         $meeting->addToSchedule(SpecialTalk::create([
-            'startAt'      => $meeting->startAt,
+            'start_at'      => $meeting->start_at,
             'speaker'      => $row[Column::SPEAKER],
             'congregation' => $row[Column::CONGREGATION],
             'disposition'  => $row[Column::DISPOSITION],
@@ -29,7 +29,7 @@ class SpecialTalkMapper implements MapperInterface
         ]));
 
         $meeting->addToSchedule(WatchtowerStudy::create([
-            'startAt' => $meeting->startAt->copy()->addMinutes(35),
+            'start_at' => $meeting->start_at->copy()->addMinutes(35),
             'reader'  => $row[Column::READER]
         ]));
     }

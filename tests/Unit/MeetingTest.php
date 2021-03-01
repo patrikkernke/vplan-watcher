@@ -19,12 +19,12 @@ class MeetingTest extends TestCase
     public function it_can_create_a_meeting_with_minimal_info()
     {
         $meeting = Meeting::create([
-            'startAt' => '2021-02-12 13:00:00',
+            'start_at' => '2021-02-12 13:00:00',
             'type' => 'Öffentliche Zusammenkunft'
         ]);
 
         $this->assertDatabaseHas('meetings', [
-            'startAt' => $meeting->startAt,
+            'start_at' => $meeting->start_at,
             'type' => $meeting->type
         ]);
     }
@@ -33,7 +33,7 @@ class MeetingTest extends TestCase
     public function it_can_store_the_chairman_optionally()
     {
         $meeting = Meeting::create([
-            'startAt' => '2021-02-12 13:00:00',
+            'start_at' => '2021-02-12 13:00:00',
             'type' => 'Öffentliche Zusammenkunft'
         ]);
 
@@ -41,20 +41,20 @@ class MeetingTest extends TestCase
         $meeting->save();
 
         $this->assertDatabaseHas('meetings', [
-            'startAt' => $meeting->startAt,
+            'start_at' => $meeting->start_at,
             'chairman' => $meeting->chairman
         ]);
     }
 
     /** @test */
-    public function it_can_filter_by_week_difference()
+    public function it_can_query_starting_from_given_date()
     {
         // Arrange
-        $first = Meeting::factory()->create(['startAt' => now()]);
-        $second = Meeting::factory()->create(['startAt' => now()->subWeeks(5)->toDateTimeString()]);
-        $third = Meeting::factory()->create(['startAt' => now()->addWeeks(5)->toDateTimeString()]);
+        $first = Meeting::factory()->create(['start_at' => now()]);
+        $second = Meeting::factory()->create(['start_at' => now()->subWeeks(5)->toDateTimeString()]);
+        $third = Meeting::factory()->create(['start_at' => now()->addWeeks(5)->toDateTimeString()]);
         // Act
-        $meetings = Meeting::allAfter(now()->subWeeks(4))->get();
+        $meetings = Meeting::after(now()->subWeeks(4))->get();
         // Assert
         $this->assertCount(2, $meetings);
     }
@@ -97,9 +97,9 @@ class MeetingTest extends TestCase
     {
         $meeting = Meeting::factory()->create();
 
-        $scheduleItem1 = PublicTalk::factory()->create(['startAt' => '2021-02-12 11:30:00']);
-        $scheduleItem2 = WatchtowerStudy::factory()->create(['startAt' => '2021-02-12 10:45:00']);
-        $scheduleItem3 = PublicTalk::factory()->create(['startAt' => '2021-02-12 10:00:00']);
+        $scheduleItem1 = PublicTalk::factory()->create(['start_at' => '2021-02-12 11:30:00']);
+        $scheduleItem2 = WatchtowerStudy::factory()->create(['start_at' => '2021-02-12 10:45:00']);
+        $scheduleItem3 = PublicTalk::factory()->create(['start_at' => '2021-02-12 10:00:00']);
 
         $meeting->addToSchedule($scheduleItem1)
             ->addToSchedule($scheduleItem2)
@@ -122,7 +122,7 @@ class MeetingTest extends TestCase
         // Assert
         $this->assertIsArray($data);
         $this->assertEquals($meeting->type, $data['type']);
-        $this->assertEquals($meeting->startAt->translatedFormat('d. M'), $data['date']);
+        $this->assertEquals($meeting->start_at->translatedFormat('d. M'), $data['date']);
         $this->assertEquals($meeting->chairman, $data['chairman']);
         $this->assertArrayHasKey('schedule', $data);
     }

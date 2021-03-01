@@ -23,7 +23,7 @@ class PublicTalkFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'speaker' => $this->faker->firstName .' '. $this->faker->lastName,
             'congregation' => $this->faker->city,
             'disposition' => $this->faker->unique()->randomNumber(3),
@@ -35,7 +35,7 @@ class PublicTalkFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($time) {
             return [
-                'startAt' => $time->toDateTimeString()
+                'start_at' => $time->toDateTimeString()
             ];
         });
     }

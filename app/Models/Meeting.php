@@ -8,21 +8,19 @@ use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\SpecialTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use App\Models\Schedule\ScheduleItem;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Traits\CanQueryMeetings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use ReflectionClass;
 
 class Meeting extends Model
 {
-    use HasFactory;
+    use HasFactory, CanQueryMeetings;
 
     protected $guarded = [];
 
     protected $casts = [
-        'startAt' => 'datetime:Y-m-d H:i'
+        'start_at' => 'datetime:Y-m-d H:i'
     ];
 
     protected $scheduleItemClasses = [
@@ -52,26 +50,14 @@ class Meeting extends Model
             });
         }
 
-        return $schedule->sortBy('startAt')->values();
-    }
-
-    /** todo@pk in trait extrahieren */
-    public function scopeAllAfter($query, Carbon $date = null): Builder
-    {
-        if (is_null($date)) $date = now();
-
-        return $query->whereDate(
-            'startAt',
-            '>=',
-            $date->toDatetimestring()
-        );
+        return $schedule->sortBy('start_at')->values();
     }
 
     public function exportForPdfSource():array
     {
         return [
             'type' => $this->type,
-            'date' => $this->startAt->translatedFormat('d. M'),
+            'date' => $this->start_at->translatedFormat('d. M'),
             'chairman' => $this->chairman,
             'schedule' => $this->schedule()->map(function ($scheduleItem) {
                 return $scheduleItem->exportForPdfSource();

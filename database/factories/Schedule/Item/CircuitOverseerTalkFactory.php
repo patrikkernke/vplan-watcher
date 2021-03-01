@@ -23,7 +23,7 @@ class CircuitOverseerTalkFactory extends Factory
     public function definition()
     {
         return [
-            'startAt' => $this->faker->dateTimeThisYear,
+            'start_at' => $this->faker->dateTimeThisYear,
             'circuitOverseer' => 'Uwe Ackermann',
             'topic' => $this->faker->sentence(6)
         ];
@@ -33,7 +33,7 @@ class CircuitOverseerTalkFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($time) {
             return [
-                'startAt' => $time->toDateTimeString()
+                'start_at' => $time->toDateTimeString()
             ];
         });
     }

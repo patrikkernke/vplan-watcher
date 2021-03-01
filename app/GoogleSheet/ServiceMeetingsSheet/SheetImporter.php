@@ -79,7 +79,7 @@ class SheetImporter
         $datetime = Carbon::createFromFormat('d.m.y', $date);
         if ($time->isNotEmpty()) $datetime->setTimeFromTimeString($time);
 
-        $meeting->startAt = $datetime;
+        $meeting->start_at = $datetime;
         $meeting->leader = $leader;
 
         $meeting->save();
@@ -93,13 +93,13 @@ class SheetImporter
         $time = $time->replace('*', '');
         if ($time->contains('DA')) {
             $time = $time->replace('DA', '')->trim();
-            $meeting->visitCircuitOverseer();
+            $meeting->visitServiceOverseer();
         }
 
         $datetime = Carbon::createFromFormat('d.m.y', $date);
         if ($time->isNotEmpty()) $datetime->setTimeFromTimeString($time);
 
-        $meeting->startAt = $datetime;
+        $meeting->start_at = $datetime;
 
         $meeting->save();
     }

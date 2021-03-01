@@ -16,12 +16,12 @@ class MemorialMeetingMapper implements MapperInterface
     {
         $meeting = Meeting::create([
             'type'     => 'Gedächtnismahl',
-            'startAt'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
+            'start_at'  => Carbon::createFromFormat('d.m.y H:i', $row[Column::DATE])->toDateTimeString(),
             'chairman' => $row[Column::CHAIRMAN]
         ]);
 
         $meeting->addToSchedule(PublicTalk::create([
-            'startAt'      => $meeting->startAt,
+            'start_at'      => $meeting->start_at,
             'speaker'      => $row[Column::SPEAKER],
             'congregation' => $row[Column::CONGREGATION],
             'disposition'  => $row[Column::DISPOSITION],

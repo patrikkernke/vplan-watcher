@@ -27,7 +27,7 @@ class CongressTest extends TestCase
         // Assert
         $this->assertIsArray($data);
         $this->assertEquals('Congress', $data['type']);
-        $this->assertEquals($congress->startAt->translatedFormat('d. M'), $data['date']);
+        $this->assertEquals($congress->start_at->translatedFormat('d. M'), $data['date']);
         $this->assertEquals($congress->motto_id, $data['motto_id']);
         $this->assertEquals($congress->motto, $data['motto']);
         $this->assertEquals($congress->part, $data['part']);

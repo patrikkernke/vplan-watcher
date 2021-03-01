@@ -18,7 +18,7 @@ class CreateCongressesTable extends Migration
 
             $table->foreignId('meeting_id')->nullable();
 
-            $table->dateTime('startAt');
+            $table->dateTime('start_at');
             $table->string('motto_id')->nullable();
             $table->string('motto')->nullable();
             $table->string('part')->nullable();
