@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\GoogleSheet;
+namespace Tests\Unit\GoogleSheet\GuestTalksSheet;
 
 use App\Models\Meeting;
 use App\GoogleSheet\GuestTalksSheet\Column;

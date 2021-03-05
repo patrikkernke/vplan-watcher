@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\GoogleSheet\GuestTalksSheet\Mapper;
+namespace Tests\Unit\GoogleSheet\GuestTalksSheet\GuestTalksSheet\Mapper;
 
 use App\GoogleSheet\GuestTalksSheet\Column;
 use App\GoogleSheet\GuestTalksSheet\Mapper\PublicTalkMapper;

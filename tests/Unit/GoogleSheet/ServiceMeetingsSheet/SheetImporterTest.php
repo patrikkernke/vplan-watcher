@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\GoogleSheet\ServiceMeetingsSheet;
+namespace Tests\Unit\GoogleSheet\GuestTalksSheet\ServiceMeetingsSheet;
 
 use App\GoogleSheet\Normalizer;
 use App\GoogleSheet\ServiceMeetingsSheet\Column;
