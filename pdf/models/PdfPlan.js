@@ -44,6 +44,10 @@ class PdfPlan
                 this._doc.getNumberOfPages(),
             );
 
+            if (this._contentGroups.length <= 0) {
+                return false;
+            }
+
             const pageBlocks = this._contentGroups[pageInfo.pageNumber - 1];
 
             const xPosition = this._settings.margin.left;

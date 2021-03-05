@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class ServiceMeeting extends Model
 {
@@ -112,12 +113,15 @@ class ServiceMeeting extends Model
             'date' => $this->start_at->translatedFormat('d. M'),
             'time' => $this->start_at->translatedFormat('H:i'),
             'leader' => $this->leader,
+            'zoom' => config('zoom.congregation.service_meeting')
         ]);
 
         if ($this->isForFieldServiceGroup()) {
+            $groupKey = Str::of($this->fieldServiceGroup->name)->lower()->slug('_');
             $baseExport = $baseExport->merge([
-                'is_visit_service_overseer' => $this->is_visit_service_overseer,
-                'field_service_group' => $this->fieldServiceGroup->exportForPdfSource()
+                'is_visit_service_overseer' => (bool) $this->is_visit_service_overseer,
+                'field_service_group' => $this->fieldServiceGroup->exportForPdfSource(),
+                'zoom' => config('zoom.field_service_group.' . $groupKey)
             ]);
         }
 

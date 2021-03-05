@@ -3,6 +3,9 @@
 
 namespace App\GoogleSheet\GuestTalksSheet;
 
+use App\Models\Meeting;
+use Illuminate\Support\Facades\DB;
+
 class SheetImporter
 {
     const SPREADSHEET_ID = '1eqwBV8UuYmWQLmpZrgElr0QL2iiBQetjrHDgikSg1CY';
@@ -47,5 +50,16 @@ class SheetImporter
 
             return true;
         });
+    }
+
+    public function cleanUpDatabase(): SheetImporter
+    {
+        DB::table('meetings')->truncate();
+        DB::table('public_talks')->truncate();
+        DB::table('special_talks')->truncate();
+        DB::table('watchtower_studies')->truncate();
+        DB::table('congresses')->truncate();
+
+        return $this;
     }
 }

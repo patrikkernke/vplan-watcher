@@ -72,6 +72,29 @@ class SheetImporterTest extends TestCase
     }
 
     /** @test */
+    public function it_imports_service_meetings_without_time_correctly()
+    {
+        // Arrange
+        $meetingData = ['31.03.21', 'Mi.', 'DW', 'U. Ackermann', 'DW', 'U. Ackermann'];
+        $meetingData[Column::TIME_1] = 'DW';
+        $meetingData[Column::TIME_2] = '10:00 DW';
+        $normalizedResponse = Normalizer::cleanUp([
+            [
+                'Datum', '', 'Zeit', 'Leiter', 'Zeit', 'Leiter', '',
+                'Irlich', 'Bendorf 1', 'Niederbieber', 'Neuwied 1', 'Bendorf 2', 'Türkisch', 'Neuwied 2'
+            ],
+            $meetingData
+        ]);
+        // Act
+        (new SheetImporter($normalizedResponse))->import();
+        // Assert
+        $meetings = (ServiceMeeting::onlyForServiceWeek()->get());
+        $this->assertCount(2, $meetings);
+        $this->assertEquals('00:00', $meetings[0]->start_at->format('H:i'));
+        $this->assertEquals('10:00', $meetings[1]->start_at->format('H:i'));
+    }
+
+    /** @test */
     public function it_creates_required_field_service_groups()
     {
         // Arrange

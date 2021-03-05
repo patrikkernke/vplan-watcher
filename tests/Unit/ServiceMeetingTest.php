@@ -146,13 +146,17 @@ class ServiceMeetingTest extends TestCase
         $this->assertEquals($meeting->start_at->translatedFormat('H:i'), $data['time']);
         $this->assertEquals($meeting->type, $data['type']);
         $this->assertEquals($meeting->leader, $data['leader']);
+        $this->assertArrayHasKey('zoom', $data);
+        $this->assertEquals(config('zoom.congregation.service_meeting.id'), $data['zoom']['id']);
+        $this->assertEquals(config('zoom.congregation.service_meeting.password'), $data['zoom']['password']);
+        $this->assertEquals(config('zoom.congregation.service_meeting.link'), $data['zoom']['link']);
     }
 
     /** @test */
     public function it_exports_service_meetings_for_field_service_group_pdf_generation()
     {
         // Arrange
-        $group = FieldServiceGroup::factory()->create();
+        $group = FieldServiceGroup::factory()->create(['name' => 'Türkisch']);
         $meeting = ServiceMeeting::factory()->make();
         $meeting->forFieldServiceGroup($group)->save();
         // Act
@@ -163,5 +167,9 @@ class ServiceMeetingTest extends TestCase
         $this->assertArrayHasKey('is_visit_service_overseer', $data);
         $this->assertIsBool($data['is_visit_service_overseer']);
         $this->assertArrayHasKey('field_service_group', $data);
+        $this->assertArrayHasKey('zoom', $data);
+        $this->assertEquals(config('zoom.field_service_group.turkisch.id'), $data['zoom']['id']);
+        $this->assertEquals(config('zoom.field_service_group.turkisch.password'), $data['zoom']['password']);
+        $this->assertEquals(config('zoom.field_service_group.turkisch.link'), $data['zoom']['link']);
     }
 }

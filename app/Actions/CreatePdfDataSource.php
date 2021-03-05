@@ -30,7 +30,6 @@ class CreatePdfDataSource
     {
         $meetings = ServiceMeeting::after(now()->subWeeks(4))->orderBy('start_at')->get();
 
-
         $remappedMeetings = $meetings->mapToGroups(function($meeting) {
             $date = $meeting->start_at->format('Y-m-d');
             return [$date => $meeting->exportForPdfSource()];

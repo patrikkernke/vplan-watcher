@@ -95,7 +95,9 @@ class ImportGoogleSheet extends Command
         $normalizedData = Normalizer::cleanup($data);
 
         $this->line('- import into database');
-        (new $importer($normalizedData))->import();
+        (new $importer($normalizedData))
+            ->cleanUpDatabase()
+            ->import();
 
         $this->info('Sheet "'.$importer::SHEETNAME.'" was successfully imported.');
 

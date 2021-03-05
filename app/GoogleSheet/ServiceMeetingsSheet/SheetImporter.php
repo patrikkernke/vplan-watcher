@@ -6,6 +6,7 @@ namespace App\GoogleSheet\ServiceMeetingsSheet;
 use App\Models\FieldServiceGroup;
 use App\Models\ServiceMeeting;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
@@ -66,6 +67,14 @@ class SheetImporter
         });
     }
 
+    public function cleanUpDatabase(): SheetImporter
+    {
+        DB::table('service_meetings')->truncate();
+        DB::table('field_service_groups')->truncate();
+
+        return $this;
+    }
+
     protected function addCongregationServiceMeeting(Stringable $date, Stringable $time, $leader)
     {
         $meeting = new ServiceMeeting();
@@ -77,7 +86,9 @@ class SheetImporter
         }
 
         $datetime = Carbon::createFromFormat('d.m.y', $date);
+        if ($time->isEmpty()) $datetime->setTimeFromTimeString('00:00');
         if ($time->isNotEmpty()) $datetime->setTimeFromTimeString($time);
+
 
         $meeting->start_at = $datetime;
         $meeting->leader = $leader;
@@ -91,6 +102,7 @@ class SheetImporter
         $meeting->forFieldServiceGroup($group);
 
         $time = $time->replace('*', '');
+
         if ($time->contains('DA')) {
             $time = $time->replace('DA', '')->trim();
             $meeting->visitServiceOverseer();
