@@ -13,6 +13,7 @@ class ServiceMeetingBlock
 
         this._color = {
             primary: '#000000',
+            weekday: '#888888',
             base: '#000000',
             service_week: '#6D28D9',
             visit_service_overseer: '#B45309'
@@ -135,8 +136,7 @@ class ServiceMeetingBlock
         ][this._data.date.getMonth()];
 
         const weekdayName = [
-            'Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
-            'Donnerstag', 'Freitag', 'Samstag'
+            'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'
         ][this._data.date.getDay()];
 
         const formattedDate = `${this._data.date.getDate()}. ${shortMonthName}`;
@@ -150,7 +150,7 @@ class ServiceMeetingBlock
         this._doc
             .setFont('Inter', 'bold')
             .setFontSize(6)
-            .setTextColor(this._color.base)
+            .setTextColor(this._color.weekday)
             .text(weekdayName.toUpperCase(), this._x(x), this._y(y) + this._safeSpace + this._textHeight(6), {
                 charSpace: 0.1
             });
@@ -209,7 +209,7 @@ class ServiceMeetingBlock
                 .setFontSize(9)
                 .setTextColor(this._color.base)
                 .textWithLink(event.zoom.id, this._x(currentX) + 40, this._y(currentY), {
-                    url: event.zoom.link
+                    url: event.zoom.link,
                 });
 
             this._renderIcon('password.png', currentX + 66, currentY);

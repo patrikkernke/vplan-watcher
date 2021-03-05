@@ -51,10 +51,12 @@ class MeetingBlock
     /**
      * Set primary color for theming the block
      * @param {string} hexColor
+     * @returns {MeetingBlock}
      */
     withColorStyle(hexColor)
     {
         this._color.primary = hexColor;
+        return this;
     }
 
     /**
