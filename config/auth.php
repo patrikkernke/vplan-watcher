@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'easy' => [
+            'driver' => 'easy-token',
+            'provider' => 'users',
+        ],
     ],
 
     /*
