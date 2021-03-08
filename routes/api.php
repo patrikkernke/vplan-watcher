@@ -57,6 +57,11 @@ Route::get('/calendar', function () {
 
     $serviceMeetings = ServiceMeeting::onlyForFieldServiceGroup()->orderBy('start_at')->get();
     $serviceMeetings->each(function($meeting) use ($calendar) {
+
+        if ($meeting->fieldGroup->name !== 'Niederbieber') {
+            return true; // continue
+        }
+
         $event = new Event();
         $name = Str::of( $meeting->fieldServiceGroup->name);
         $zoom = config('zoom.field_service_group.' . $name->lower()->slug('_'));
@@ -74,7 +79,7 @@ Route::get('/calendar', function () {
                 )
             );
 
-//        $calendar->addEvent($event);
+        $calendar->addEvent($event);
     });
 
 
