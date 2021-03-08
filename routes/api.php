@@ -58,7 +58,7 @@ Route::get('/calendar', function () {
     $serviceMeetings = ServiceMeeting::onlyForFieldServiceGroup()->orderBy('start_at')->get();
     $serviceMeetings->each(function($meeting) use ($calendar) {
 
-        if ($meeting->fieldGroup->name !== 'Niederbieber') {
+        if ($meeting->fieldServiceGroup->name !== 'Niederbieber') {
             return true; // continue
         }
 
