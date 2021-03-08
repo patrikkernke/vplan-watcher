@@ -38,7 +38,7 @@ Route::get('/calendar', function () {
 
     $serviceMeetings->each(function($meeting) use ($calendar) {
         $event = new Event();
-        $event->setSummary('TP Versammlung')
+        $event->setSummary('Treffpunkt')
             ->setLocation(new Location('Zoom'))
             ->setDescription(
                 'ID ' . config('zoom.congregation.service_meeting.id' ) . PHP_EOL .
@@ -65,7 +65,7 @@ Route::get('/calendar', function () {
         $event = new Event();
         $name = Str::of( $meeting->fieldServiceGroup->name);
         $zoom = config('zoom.field_service_group.' . $name->lower()->slug('_'));
-        $event->setSummary('TP ' . $name)
+        $event->setSummary('Treffpunkt ' . $name)
             ->setLocation(new Location('Zoom'))
             ->setDescription(
                 'ID ' . $zoom['id'] . PHP_EOL .
