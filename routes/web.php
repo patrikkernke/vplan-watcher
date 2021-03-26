@@ -23,6 +23,7 @@ Route::domain('countdown.' . $host)->group(function () {
     Route::get('/', CountdownController::class);
 });
 
+Route::get('/countdown', CountdownController::class);
 
 Route::get('/', function () {
     return view('welcome');
