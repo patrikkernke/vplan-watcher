@@ -15,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$host = parse_url(config('app.url'), PHP_URL_HOST);
+Route::domain('countdown.' . $host)->group(function () {
+    Route::get('/', CountdownController::class);
+});
+
+
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/countdown', CountdownController::class)->middleware('general-token');
 
 // Route::get('/pdf-plan/oeffentliche-zusammenkuenfte', [PdfController::class, 'weekendMeetingSchedule']);
 
