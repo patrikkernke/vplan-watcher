@@ -13022,6 +13022,10 @@ select {
   line-height: 1;
 }
 
+.text-splash {
+  font-size: 14rem;
+}
+
 .leading-3 {
   line-height: .75rem;
 }
@@ -32535,6 +32539,10 @@ select {
   transition-duration: 1000ms;
 }
 
+.duration-3500 {
+  transition-duration: 3500ms;
+}
+
 .delay-75 {
   transition-delay: 75ms;
 }
@@ -44931,6 +44939,10 @@ select {
   .sm\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .sm\:text-splash {
+    font-size: 14rem;
   }
 
   .sm\:leading-3 {
@@ -64433,6 +64445,10 @@ select {
     transition-duration: 1000ms;
   }
 
+  .sm\:duration-3500 {
+    transition-duration: 3500ms;
+  }
+
   .sm\:delay-75 {
     transition-delay: 75ms;
   }
@@ -76764,6 +76780,10 @@ select {
   .md\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .md\:text-splash {
+    font-size: 14rem;
   }
 
   .md\:leading-3 {
@@ -96266,6 +96286,10 @@ select {
     transition-duration: 1000ms;
   }
 
+  .md\:duration-3500 {
+    transition-duration: 3500ms;
+  }
+
   .md\:delay-75 {
     transition-delay: 75ms;
   }
@@ -108597,6 +108621,10 @@ select {
   .lg\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .lg\:text-splash {
+    font-size: 14rem;
   }
 
   .lg\:leading-3 {
@@ -128099,6 +128127,10 @@ select {
     transition-duration: 1000ms;
   }
 
+  .lg\:duration-3500 {
+    transition-duration: 3500ms;
+  }
+
   .lg\:delay-75 {
     transition-delay: 75ms;
   }
@@ -140430,6 +140462,10 @@ select {
   .xl\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .xl\:text-splash {
+    font-size: 14rem;
   }
 
   .xl\:leading-3 {
@@ -159932,6 +159968,10 @@ select {
     transition-duration: 1000ms;
   }
 
+  .xl\:duration-3500 {
+    transition-duration: 3500ms;
+  }
+
   .xl\:delay-75 {
     transition-delay: 75ms;
   }
@@ -172263,6 +172303,10 @@ select {
   .\32xl\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .\32xl\:text-splash {
+    font-size: 14rem;
   }
 
   .\32xl\:leading-3 {
@@ -191763,6 +191807,10 @@ select {
 
   .\32xl\:duration-1000 {
     transition-duration: 1000ms;
+  }
+
+  .\32xl\:duration-3500 {
+    transition-duration: 3500ms;
   }
 
   .\32xl\:delay-75 {

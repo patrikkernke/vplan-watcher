@@ -5,6 +5,7 @@ namespace Tests\Feature\Actions;
 use App\Actions\CreatePdfDataSource;
 use Database\Seeders\PdfDataServiceMeetingsSeeder;
 use Database\Seeders\PdfDataWeekendMeetingsSeeder;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -13,39 +14,58 @@ class CreatePdfDataSourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function it_creates_a_valid_json_file_as_pdf_data_source_for_meetings()
+    private Filesystem $storage;
+
+    protected function setUp(): void
     {
-        // Arrange
+        parent::setUp();
+
         Storage::fake('pdf-sources');
-        $storage = Storage::disk('pdf-sources');
+        $this->storage = Storage::disk('pdf-sources');
         $this->seed(PdfDataWeekendMeetingsSeeder::class);
+        $this->seed(PdfDataServiceMeetingsSeeder::class);
+    }
 
-        // Act
-        CreatePdfDataSource::forWeekendMeetings();
-
+    /**
+     * @test
+     * @dataProvider sourceTypes
+     * @param $sourceType
+     */
+    public function it_creates_and_stores_a_valid_json_file($sourceType)
+    {
+        // Arrange && Act
+        $filename = CreatePdfDataSource::$sourceType();
         // Assert
-        $storage->assertExists('weekend-meetings.json');
-        $json = $storage->get('weekend-meetings.json');
+        $this->storage->assertExists($filename);
+        $json = $this->storage->get($filename);
         $this->assertJson($json);
-        $this->assertIsArray(json_decode($json));
     }
 
     /** @test */
-    public function it_creates_a_valid_json_file_as_pdf_data_source_for_service_meetings()
+    public function it_stores_weekend_meetings_as_array()
     {
-        // Arrange
-        Storage::fake('pdf-sources');
-        $storage = Storage::disk('pdf-sources');
-        $this->seed(PdfDataServiceMeetingsSeeder::class);
-
-        // Act
-        CreatePdfDataSource::forServiceMeetings();
-
+        // Arrange && Act
+        $filename = CreatePdfDataSource::forWeekendMeetings();
         // Assert
-        $storage->assertExists('service-meetings.json');
-        $json = $storage->get('service-meetings.json');
-        $this->assertJson($json);
-        $this->assertIsObject(json_decode($json));
+        $json = json_decode($this->storage->get($filename));
+        $this->assertIsArray($json);
+    }
+
+    /** @test */
+    public function it_stores_service_meetings_as_object()
+    {
+        // Arrange && Act
+        $filename = CreatePdfDataSource::forServiceMeetings();
+        // Assert
+        $json = json_decode($this->storage->get($filename));
+        $this->assertIsObject($json);
+    }
+
+    public function sourceTypes(): array
+    {
+        return [
+            ['forServiceMeetings'],
+            ['forWeekendMeetings']
+        ];
     }
 }

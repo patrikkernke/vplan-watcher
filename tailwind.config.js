@@ -13,6 +13,12 @@ module.exports = {
             fontFamily: {
                 sans: ['Inter var', ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                'splash': '14rem'
+            },
+            transitionDuration: {
+                '3500': '3500ms'
+            }
         },
     },
 

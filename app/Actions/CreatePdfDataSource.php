@@ -20,10 +20,13 @@ class CreatePdfDataSource
             return $meeting->exportForPdfSource();
         });
 
+        $filename = 'weekend-meetings.json';
         Storage::disk('pdf-sources')->put(
-            'weekend-meetings.json',
+            $filename,
             $remappedMeetings->toJson()
         );
+
+        return $filename;
     }
 
     public static function forServiceMeetings()
@@ -35,9 +38,12 @@ class CreatePdfDataSource
             return [$date => $meeting->exportForPdfSource()];
         });
 
+        $filename = 'service-meeting.json';
         Storage::disk('pdf-sources')->put(
-            'service-meetings.json',
+            $filename,
             $remappedMeetings->toJson()
         );
+
+        return $filename;
     }
 }
