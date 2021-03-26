@@ -2,7 +2,7 @@
 
     <!-- background image -->
     <div class="z-0 fixed inset-0">
-        <img class="object-cover w-full h-full" src="/images/cover-default.jpg">
+        <img class="object-cover w-full h-full" src="/images/cover-{{ $coverImage }}">
     </div>
 
     @if ($isMeetingToday)

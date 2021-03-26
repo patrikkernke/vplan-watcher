@@ -13,6 +13,7 @@ class CountdownController extends Controller
         $isMeetingToday = false;
         $meetingName = 'Keine Zusammenkunft';
         $startTime = null;
+        $coverImage = 'default.jpg';
 
         if ($today->isFriday()) {
             $isMeetingToday = true;
@@ -26,10 +27,18 @@ class CountdownController extends Controller
             $startTime = $today->copy()->setTime(10, 0);
         }
 
+        if ($today->isSameDay('2021-03-27')) {
+            $isMeetingToday = true;
+            $meetingName = 'Gedächtnismahl';
+            $startTime = $today->copy()->setTime(19, 0);
+            $coverImage = 'memorial.png';
+        }
+
         return view('countdown', compact(
             'isMeetingToday',
             'meetingName',
-            'startTime'
+            'startTime',
+            'coverImage'
         ));
     }
 }
