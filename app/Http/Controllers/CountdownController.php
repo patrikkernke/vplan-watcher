@@ -17,7 +17,7 @@ class CountdownController extends Controller
         if ($today->isFriday()) {
             $isMeetingToday = true;
             $meetingName = 'Leben- und Dienstzusammenkunft';
-            $startTime = $today->copy()->setTime(16, 45);
+            $startTime = $today->copy()->setTime(19, 00);
         }
 
         if ($today->isSunday()) {
