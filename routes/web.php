@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$host = parse_url(config('app.url'), PHP_URL_HOST);
+$host = Str::of(
+        parse_url(config('app.url'), PHP_URL_HOST)
+    )->replace('www.', '');
+
 Route::domain('countdown.' . $host)->group(function () {
     Route::get('/', CountdownController::class);
 });
