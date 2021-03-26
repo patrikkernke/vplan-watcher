@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class CountdownController extends Controller
 {
-    public function __invoke()
+    public function __invoke($congregation = null)
     {
         $today = now();
 
@@ -14,6 +14,7 @@ class CountdownController extends Controller
         $meetingName = 'Keine Zusammenkunft';
         $startTime = null;
         $coverImage = 'default.jpg';
+        $congregation = is_null($congregation) ? 'Versammlung Neuwied' : $congregation;
 
         if ($today->isFriday()) {
             $isMeetingToday = true;
@@ -38,7 +39,8 @@ class CountdownController extends Controller
             'isMeetingToday',
             'meetingName',
             'startTime',
-            'coverImage'
+            'coverImage',
+            'congregation'
         ));
     }
 }

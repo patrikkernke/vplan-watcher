@@ -68,7 +68,7 @@
         <!-- current time -->
         <div class="bg-gray-800 inline-block text-center font-sans text-indigo-100 py-1 px-3 text-2xl rounded mb-4" x-text="currentTime + ' Uhr'"></div>
         <div class="font-black text-4xl text-gray-800">{{ $meetingName }}</div>
-        <div class="text-3xl text-gray-600">Versammlung Neuwied</div>
+        <div class="text-3xl text-gray-600">{{ $congregation }}</div>
     </footer>
 
 </x-guest-layout>
