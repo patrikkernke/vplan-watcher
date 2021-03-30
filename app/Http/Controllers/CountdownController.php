@@ -28,11 +28,10 @@ class CountdownController extends Controller
             $startTime = $today->copy()->setTime(10, 0);
         }
 
-        if ($today->isSameDay('2021-03-27')) {
+        if ($today->isSameDay('2021-03-30')) {
             $isMeetingToday = true;
-            $meetingName = 'Gedächtnismahl';
+            $meetingName = 'Dienstwoche';
             $startTime = $today->copy()->setTime(19, 0);
-            $coverImage = 'memorial.png';
         }
 
         return view('countdown', compact(
