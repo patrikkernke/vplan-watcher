@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Meeting;
+use App\Models\Schedule\Item\PublicTalk;
+use App\Models\Schedule\Item\WatchtowerStudy;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -53,6 +55,8 @@ class ShortcutsControllerTest extends TestCase
         Meeting::factory()->weekendMeeting()->atWeekFromNow(2)->create();
         Meeting::factory()->weekendMeeting()->atWeekFromNow(1)->create();
         $currentWeekendMeeting = Meeting::factory()->weekendMeeting()->atWeekFromNow(0)->create();
+        $currentWeekendMeeting->addToSchedule(PublicTalk::factory()->create());
+        $currentWeekendMeeting->addToSchedule(WatchtowerStudy::factory()->create());
         Meeting::factory()->weekendMeeting()->atWeekFromNow(1)->create();
         Meeting::factory()->weekendMeeting()->atWeekFromNow(2)->create();
         // Act
@@ -63,5 +67,7 @@ class ShortcutsControllerTest extends TestCase
             ->assertJsonPath('data.type', $currentWeekendMeeting->type)
             ->assertJsonPath('data.start_at', $currentWeekendMeeting->start_at->toDateTimeString())
             ->assertJsonPath('data.chairman', $currentWeekendMeeting->chairman);
+        $this->assertArrayHasKey('schedule', $response['data']);
+
     }
 }

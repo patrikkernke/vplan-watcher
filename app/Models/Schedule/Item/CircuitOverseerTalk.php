@@ -24,4 +24,13 @@ class CircuitOverseerTalk extends ScheduleItem
             'topic' => $this->topic,
         ];
     }
+
+    public function exportForApi():array
+    {
+        return [
+            'type' => (new ReflectionClass($this))->getShortName(),
+            'circuitOverseer' => $this->circuitOverseer,
+            'topic' => $this->topic,
+        ];
+    }
 }

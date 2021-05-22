@@ -16,7 +16,10 @@ class MeetingResource extends JsonResource
         return [
             'start_at' => $this->start_at->toDateTimeString(),
             'type' => $this->type,
-            'chairman' => $this->chairman
+            'chairman' => $this->chairman,
+            'schedule' => $this->schedule()->map(function ($scheduleItem) {
+                return $scheduleItem->exportForApi();
+            })
         ];
     }
 }

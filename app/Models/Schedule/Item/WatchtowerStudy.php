@@ -24,4 +24,13 @@ class WatchtowerStudy extends ScheduleItem
             'reader' => $this->reader,
         ];
     }
+
+    public function exportForApi():array
+    {
+        return [
+            'type' => (new ReflectionClass($this))->getShortName(),
+            'conductor' => $this->conductor,
+            'reader' => $this->reader,
+        ];
+    }
 }

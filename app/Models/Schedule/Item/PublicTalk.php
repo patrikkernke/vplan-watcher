@@ -25,4 +25,14 @@ class PublicTalk extends ScheduleItem
             'congregation' => $this->congregation,
         ];
     }
+
+    public function exportForApi():array
+    {
+        return [
+            'type' => (new ReflectionClass($this))->getShortName(),
+            'speaker' => $this->speaker,
+            'topic' => $this->topic,
+            'congregation' => $this->congregation,
+        ];
+    }
 }

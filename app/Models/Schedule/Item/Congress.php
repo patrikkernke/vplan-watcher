@@ -27,4 +27,15 @@ class Congress extends ScheduleItem
             'part' => $this->part,
         ];
     }
+
+    public function exportForApi():array
+    {
+        return [
+            'type' => (new ReflectionClass($this))->getShortName(),
+            'date' => $this->start_at->translatedFormat('d. M'),
+            'motto_id' => $this->motto_id,
+            'motto' => $this->motto,
+            'part' => $this->part,
+        ];
+    }
 }
