@@ -16,7 +16,7 @@
 
                 <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
 
-                    @livewire('dashboard.public-talks-widget')
+                    @livewire('dashboard.meeting-pdf-widget')
 
                     <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
                         <div class="flex items-center">
