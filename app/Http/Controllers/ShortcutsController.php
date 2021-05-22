@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MeetingResource;
 use App\Models\Meeting;
+use App\Models\Schedule\Item\PublicTalk;
+use App\Models\Schedule\Item\WatchtowerStudy;
 
 class ShortcutsController extends Controller
 {
@@ -11,8 +13,31 @@ class ShortcutsController extends Controller
     {
         $meeting = Meeting::after(now())->orderBy('start_at')->first();
 
-        return $meeting ?
-            new MeetingResource($meeting)
-            : null;
+        return response()->json([ 'data' => $this->exportForApi($meeting)]);
+    }
+
+    private function exportForApi($meeting)
+    {
+        if (is_null($meeting)) return null;
+
+        $schedule = $meeting->schedule();
+        $publicTalk = $schedule->whereInstanceOf(PublicTalk::class)->first();
+        $watchtowerStudy = $schedule->whereInstanceOf(WatchtowerStudy::class)->first();
+
+        return [
+            'start_at' => $meeting->start_at->toDateTimeString(),
+            'type' => $meeting->type,
+            'chairman' => $meeting->chairman,
+            'publicTalk' => [
+                'speaker' => optional($publicTalk)->speaker,
+                'disposition' => optional($publicTalk)->disposition,
+                'topic' => optional($publicTalk)->topic,
+                'congregation' => optional($publicTalk)->congregation
+            ],
+            'watchtowerStudy' => [
+                'conductor' => optional($watchtowerStudy)->conductor,
+                'reader' => optional($watchtowerStudy)->reader,
+            ],
+        ];
     }
 }

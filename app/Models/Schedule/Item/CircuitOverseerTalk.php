@@ -30,6 +30,7 @@ class CircuitOverseerTalk extends ScheduleItem
         return [
             'type' => (new ReflectionClass($this))->getShortName(),
             'circuitOverseer' => $this->circuitOverseer,
+            'disposition' => $this->disposition,
             'topic' => $this->topic,
         ];
     }

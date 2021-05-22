@@ -30,6 +30,7 @@ class SpecialTalk extends ScheduleItem
         return [
             'type' => (new ReflectionClass($this))->getShortName(),
             'speaker' => $this->speaker,
+            'disposition' => $this->disposition,
             'topic' => $this->topic,
             'congregation' => $this->congregation,
         ];

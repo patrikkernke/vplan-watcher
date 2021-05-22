@@ -47,6 +47,7 @@ class ShortcutsControllerTest extends TestCase
     /** @test */
     public function it_returns_weekend_meeting_for_current_week()
     {
+        $this->withoutExceptionHandling();
         // Arrange
         Sanctum::actingAs(
             User::factory()->create(), ['read'], 'easy'
@@ -67,7 +68,8 @@ class ShortcutsControllerTest extends TestCase
             ->assertJsonPath('data.type', $currentWeekendMeeting->type)
             ->assertJsonPath('data.start_at', $currentWeekendMeeting->start_at->toDateTimeString())
             ->assertJsonPath('data.chairman', $currentWeekendMeeting->chairman);
-        $this->assertArrayHasKey('schedule', $response['data']);
+
+        dump($response['data']);
 
     }
 }
