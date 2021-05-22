@@ -46,19 +46,6 @@ class MeetingTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_query_starting_from_given_date()
-    {
-        // Arrange
-        $first = Meeting::factory()->create(['start_at' => now()]);
-        $second = Meeting::factory()->create(['start_at' => now()->subWeeks(5)->toDateTimeString()]);
-        $third = Meeting::factory()->create(['start_at' => now()->addWeeks(5)->toDateTimeString()]);
-        // Act
-        $meetings = Meeting::after(now()->subWeeks(4))->get();
-        // Assert
-        $this->assertCount(2, $meetings);
-    }
-
     /**
      * @test
      * @dataProvider scheduleItemsProvider

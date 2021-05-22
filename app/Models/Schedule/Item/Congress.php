@@ -5,6 +5,7 @@ namespace App\Models\Schedule\Item;
 use App\Models\Schedule\ScheduleItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use ReflectionClass;
+use function Symfony\Component\Translation\t;
 
 class Congress extends ScheduleItem
 {

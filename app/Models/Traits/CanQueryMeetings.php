@@ -14,9 +14,16 @@ trait CanQueryMeetings
         if (is_null($date)) $date = now();
 
         return $query->whereDate(
-            'start_at',
-            '>=',
-            $date->toDatetimestring()
+            'start_at', '>=', $date
+        );
+    }
+
+    public function scopeBefore($query, Carbon $date = null): Builder
+    {
+        if (is_null($date)) $date = now();
+
+        return $query->whereDate(
+            'start_at', '<', $date
         );
     }
 }

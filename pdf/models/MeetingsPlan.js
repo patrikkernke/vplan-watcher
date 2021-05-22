@@ -42,7 +42,7 @@ class MeetingsPlan extends PdfPlan
         page.setFont('Inter', 'bold')
             .setFontSize(18)
             .setTextColor('#000000')
-            .text('Zusammenkunft für die Öffentlichkeit', settings.margin.left, 25,{ lineHeightFactor: 1 });
+            .text('Zusammenkunft für die Öffentlichkeit', settings.margin.left, 20,{ lineHeightFactor: 1 });
 
         // Date
         const today = new Date();
@@ -62,7 +62,7 @@ class MeetingsPlan extends PdfPlan
         page.setFont('Inter', 'normal')
             .setFontSize(9)
             .setTextColor('#000000')
-            .text(subtitle, settings.margin.left, 30);
+            .text(subtitle, settings.margin.left, 25);
     }
 
     _publicTalkBlock(meeting)
@@ -149,6 +149,7 @@ class MeetingsPlan extends PdfPlan
             topic: meeting.schedule[0].motto,
         }).withColorStyle('#047857');
 
+        if (meeting.schedule[0].part !== null) block.withData({ subtopic: meeting.schedule[0].part });
         return block;
     }
 }

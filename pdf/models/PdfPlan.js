@@ -18,7 +18,7 @@ class PdfPlan
         this._contentGroups = [];
 
         this._settings = {
-            margin: { left: 20, top: 45, right: 20, bottom: 24 },
+            margin: { left: 20, top: 35, right: 20, bottom: 24 },
             blockSpace: 2,
         }
     }

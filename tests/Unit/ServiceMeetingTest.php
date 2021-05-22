@@ -121,19 +121,6 @@ class ServiceMeetingTest extends TestCase
     }
 
     /** @test */
-    public function it_can_query_starting_from_given_date()
-    {
-        // Arrange
-        $first = ServiceMeeting::factory()->create(['start_at' => now()]);
-        $second = ServiceMeeting::factory()->create(['start_at' => now()->subWeeks(5)->toDateTimeString()]);
-        $third = ServiceMeeting::factory()->create(['start_at' => now()->addWeeks(5)->toDateTimeString()]);
-        // Act
-        $meetings = ServiceMeeting::after(now()->subWeeks(4))->get();
-        // Assert
-        $this->assertCount(2, $meetings);
-    }
-
-    /** @test */
     public function it_exports_service_meetings_for_congregation_pdf_generation()
     {
         // Arrange

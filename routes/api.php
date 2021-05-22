@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShortcutsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/shortcuts/meetings/next/weekend-meeting', [ShortcutsController::class, 'nextWeekendMeeting'])
+    ->middleware('auth:easy');
+
 use Eluceo\iCal\Domain\Entity\Event;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
@@ -25,11 +29,7 @@ use App\Models\ServiceMeeting;
 use Eluceo\iCal\Domain\ValueObject\TimeSpan;
 use Eluceo\iCal\Domain\ValueObject\DateTime;
 use Eluceo\iCal\Domain\ValueObject\Location;
-use Laravel\Sanctum\PersonalAccessToken;
 
-Route::get('/test', function (Request $request) {
-    return 'Test';
-})->middleware('auth:easy');
 
 Route::get('/calendar', function () {
 

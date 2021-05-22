@@ -14,7 +14,9 @@ class CreatePdfDataSource
 {
     public static function forWeekendMeetings()
     {
-        $meetings = Meeting::after(now()->subWeeks(4))->orderBy('start_at')->get();
+        $meetings = Meeting::after(now()->subWeeks(4))->orderBy('start_at')
+            ->limit(17)
+            ->get();
 
         $remappedMeetings = $meetings->map(function ($meeting) {
             return $meeting->exportForPdfSource();
