@@ -27,7 +27,7 @@ class PublicTalkMapper implements MapperInterface
             'speaker'      => $row[Column::SPEAKER],
             'congregation' => $row[Column::CONGREGATION],
             'disposition'  => $row[Column::DISPOSITION],
-            'topic'        => Str::contains(Str::lower($row[Column::TOPIC]), 'vortragsthema') ? null : $row[Column::TOPIC],
+            'topic'        => self::removePlaceholders($row[Column::TOPIC]),
         ]));
 
         $meeting->addToSchedule(WatchtowerStudy::create([
@@ -36,5 +36,14 @@ class PublicTalkMapper implements MapperInterface
         ]));
 
         return $meeting;
+    }
+
+    /**
+     * @param $value
+     * @return null
+     */
+    private static function removePlaceholders($value)
+    {
+        return Str::contains(Str::lower($value), 'thema') ? null : $value;
     }
 }
