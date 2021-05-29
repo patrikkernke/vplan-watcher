@@ -44,6 +44,13 @@ class PublicTalkMapper implements MapperInterface
      */
     private static function removePlaceholders($value)
     {
-        return Str::contains(Str::lower($value), 'thema') ? null : $value;
+        $normalizedValue = Str::lower($value);
+
+        if ( Str::contains($normalizedValue, 'thema') )
+            return null;
+        if ( Str::contains($normalizedValue, 'motto') )
+            return null;
+
+        return  $value;
     }
 }

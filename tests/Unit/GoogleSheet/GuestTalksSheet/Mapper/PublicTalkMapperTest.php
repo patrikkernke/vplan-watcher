@@ -49,7 +49,9 @@ class PublicTalkMapperTest extends TestCase
             ['///// vortragsthema kommt ////'],
             ['Vortragsthema folgt noch'],
             ['///////// THEMA FOLGT /////////'],
-            ['Thema folgt noch']
+            ['Thema folgt noch'],
+            ['////////////////      MOTTO FOLGT     ////////////////'],
+            ['Motto folgt noch'],
         ];
     }
 
