@@ -7,7 +7,6 @@ use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
