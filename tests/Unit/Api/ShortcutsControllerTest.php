@@ -22,7 +22,7 @@ class ShortcutsControllerTest extends TestCase
         // Act
         $guestResponse = $this->getJson('/api/shortcuts/meetings/next/weekend-meeting');
         // Assert
-        $guestResponse->assertStatus(401);
+        $guestResponse->assertUnauthorized();
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class ShortcutsControllerTest extends TestCase
         // Act
         $response = $this->getJson("/api/shortcuts/meetings/next/weekend-meeting?token=$token");
         // Assert
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     /** @test */
@@ -63,12 +63,9 @@ class ShortcutsControllerTest extends TestCase
         $response = $this->get('/api/shortcuts/meetings/next/weekend-meeting');
         // Assert
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonPath('data.type', $currentWeekendMeeting->type)
             ->assertJsonPath('data.start_at', $currentWeekendMeeting->start_at->toDateTimeString())
             ->assertJsonPath('data.chairman', $currentWeekendMeeting->chairman);
-
-        dump($response['data']);
-
     }
 }

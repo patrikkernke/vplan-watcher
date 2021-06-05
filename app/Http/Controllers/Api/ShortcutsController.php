@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\MeetingResource;
+use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Schedule\Item\PublicTalk;
 use App\Models\Schedule\Item\WatchtowerStudy;
