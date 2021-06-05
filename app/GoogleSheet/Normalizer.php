@@ -16,6 +16,15 @@ class Normalizer
         // remove first header row
         $headerRow = $collection->shift();
 
+        // remove completely empty rows without any information
+        $collection = $collection->filter(function ($row) {
+            return Str::of( collect($row)->join('') )
+                ->lower()
+                ->replace('false', '')
+                ->isNotEmpty();
+        });
+
+
         // convert "" -> null
         $collection = $collection->map(function ($row) {
             return collect($row)->map(function ($value) {

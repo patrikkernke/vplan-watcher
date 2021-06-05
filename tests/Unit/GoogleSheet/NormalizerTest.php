@@ -4,6 +4,7 @@ namespace Tests\Unit\GoogleSheet;
 
 use App\GoogleSheet\Normalizer;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class NormalizerTest extends TestCase
@@ -81,11 +82,32 @@ class NormalizerTest extends TestCase
         $this->assertCount(0, $rowsWithToFewColumns);
     }
 
+    /**
+     * @test
+     * @dataProvider googleSheetResponses
+     */
+    public function it_removes_empty_rows($response)
+    {
+        // Arrange
+        // Act
+        $collection  = Normalizer::cleanUp($response);
+        // Assert
+        $emptyRows = $collection->filter(function ($row) {
+            return Str::of( collect($row)->join('') )
+                    ->lower()
+                    ->replace('false', '')
+                    ->isEmpty();
+        });
+
+        $this->assertCount(0, $emptyRows);
+    }
+
     public function googleSheetResponses()
     {
         return [
             'Gastvorträge' => [require 'tests/Dummies/googlesheets-response-gastvortrage.php'],
             'Treffpunkte' => [require 'tests/Dummies/googlesheets-response-treffpunkte.php'],
+            'Redner Neuwied' => [require 'tests/Dummies/googlesheets-response-redner-neuwied.php'],
         ];
     }
 }
