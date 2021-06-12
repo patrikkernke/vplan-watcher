@@ -29,7 +29,7 @@ Route::get('pdf/data/weekend-meetings', [PdfController::class, 'weekendMeetings'
     ->name('pdf.data.weekend-meetings');
 
 Route::get('/shortcuts/meetings/next/weekend-meeting', [ShortcutsController::class, 'nextWeekendMeeting'])
-    ->middleware('auth:easy');
+    ->middleware('auth:sanctum');
 
 use Eluceo\iCal\Domain\Entity\Event;
 use Eluceo\iCal\Domain\Entity\Calendar;
