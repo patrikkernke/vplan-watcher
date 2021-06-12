@@ -91,6 +91,6 @@ Route::get('/calendar', function () {
         $calendar->addEvent($event);
     });
 
-
     return (new CalendarFactory())->createCalendar($calendar);
+
 })->middleware('auth:easy');
