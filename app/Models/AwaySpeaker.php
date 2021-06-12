@@ -10,4 +10,13 @@ class AwaySpeaker extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'dispositions' => 'array',
+    ];
 }

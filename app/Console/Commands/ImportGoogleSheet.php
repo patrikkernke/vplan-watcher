@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\GoogleSheet\Connector;
+use App\GoogleSheet\DispositionSheet\SheetImporter as DispositionSheetImporter;
 use App\GoogleSheet\Normalizer;
 use App\GoogleSheet\GuestTalksSheet\SheetImporter as GuestTalksSheetImporter;
 use App\GoogleSheet\ServiceMeetingsSheet\SheetImporter as ServiceMeetingsSheetImporter;
@@ -56,6 +57,7 @@ class ImportGoogleSheet extends Command
             GuestTalksSheetImporter::SHEETNAME => GuestTalksSheetImporter::class,
             ServiceMeetingsSheetImporter::SHEETNAME => ServiceMeetingsSheetImporter::class,
             AwaySpeakerSheetImporter::SHEETNAME => AwaySpeakerSheetImporter::class,
+            DispositionSheetImporter::SHEETNAME => DispositionSheetImporter::class,
         ];
 
         $this->line('- search Importer');

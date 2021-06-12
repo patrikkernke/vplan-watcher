@@ -4,12 +4,8 @@
 namespace App\GoogleSheet\AwaySpeakerSheet;
 
 use App\Models\AwaySpeaker;
-use App\Models\FieldServiceGroup;
-use App\Models\ServiceMeeting;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
 
 class SheetImporter
 {
@@ -27,15 +23,15 @@ class SheetImporter
     public function import()
     {
         $this->rawValues->each(function($row) {
-
             AwaySpeaker::create([
                 'firstname' => $row[Column::FIRSTNAME],
                 'lastname' => $row[Column::LASTNAME],
-                'dispositions' => $row[Column::DISPOSITIONS],
+                'dispositions' => Str::of($row[Column::DISPOSITIONS])->split('/[\s,]+/'),
                 'email' => $row[Column::EMAIL],
                 'phone' => $row[Column::PHONE],
-                'may_give_speak_away' => $row[Column::MAY_GIVE_SPEAK_AWAY],
-                'is_dag' => $row[Column::IS_DAG],
+                'may_give_speak_away' => Str::of($row[Column::MAY_GIVE_SPEAK_AWAY])->lower()->is('true'),
+                'is_dag' => Str::of($row[Column::IS_DAG])->lower()->is('true'),
+                'notes' => $row[Column::NOTES],
             ]);
 
 

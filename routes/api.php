@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ShortcutsController;
+use App\Http\Controllers\Api\PdfController;
+use App\Http\Controllers\Api\ShortcutsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('pdf/data/away-speaker', [PdfController::class, 'awaySpeaker'])
+    ->middleware('auth:sanctum')
+    ->name('pdf.data.away-speaker');
+
+Route::get('pdf/data/weekend-meetings', [PdfController::class, 'weekendMeetings'])
+    ->middleware('auth:sanctum')
+    ->name('pdf.data.weekend-meetings');
 
 Route::get('/shortcuts/meetings/next/weekend-meeting', [ShortcutsController::class, 'nextWeekendMeeting'])
     ->middleware('auth:easy');

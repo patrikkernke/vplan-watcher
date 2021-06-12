@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('import:googlesheet Gastvorträge')->everyThirtyMinutes();
          $schedule->command('import:googlesheet "Redner Neuwied"')->everyThirtyMinutes();
+         $schedule->command('import:googlesheet "Vortragsthemen"')->everyThirtyMinutes();
     }
 
     /**
