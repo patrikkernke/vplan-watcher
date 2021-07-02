@@ -4,6 +4,7 @@ class Base {
         this._document = null
         this._backgroundColor = null
         this._fixedWidth = null
+        this._fixedHeight = null
         this._space = { top: 0, right: 0, bottom: 0, left: 0 }
     }
 
@@ -20,8 +21,8 @@ class Base {
     // Getters
 
     // to be filled by child class
-    get height() { return 0 }
-    get width() { return 0 }
+    get height() { return this._fixedHeight || 0 }
+    get width() { return this._fixedWidth || 0 }
     get children() { return null }
     get hasChildren() { return false }
     get hasNotChildren() { return ! this.hasChildren }
@@ -70,6 +71,12 @@ class Base {
 
     fixedWidth(width) {
         this._fixedWidth = width
+
+        return this
+    }
+
+    fixedHeight(height) {
+        this._fixedHeight = height
 
         return this
     }

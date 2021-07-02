@@ -45,6 +45,7 @@ class Text extends Base {
     // Getters
 
     get height() {
+        if (this._fixedHeight) return this._fixedHeight
         let lines = 1
 
         if (this._maxWidth > 0) {

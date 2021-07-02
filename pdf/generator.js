@@ -8,6 +8,7 @@ require('dotenv').config()
 // const AwaySpeakerPlan = require("./models/AwaySpeakerPlan");
 
 const AwaySpeakerPlan = require("./documents/AwaySpeakerPlan");
+const ServiceMeetingPlan = require("./documents/ServiceMeetingPlan");
 // const AwaySpeakerPlan = require("./documents/TestPlan");
 
 const axios = AxiosLibrary.create({
@@ -22,6 +23,13 @@ axios.get('/away-speaker').then(response => {
 
     require("child_process").exec('open ./pdf/docs/eigene-redner-alle.pdf');
 }).catch();
+
+// axios.get('/service-meetings/2021/06').then(response => {
+//     const pdf = new ServiceMeetingPlan(response.data);
+//     pdf.render().save('pdf/docs/treffpunkte.pdf');
+//
+//     require("child_process").exec('open ./pdf/docs/treffpunkte.pdf');
+// }).catch();
 
 // const publicMeetingsPlan = new MeetingsPlan();
 // publicMeetingsPlan.withData(DataSourceReader.read('weekend-meetings.json'))

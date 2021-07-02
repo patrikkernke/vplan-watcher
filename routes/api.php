@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('pdf/data/away-speaker', [PdfController::class, 'awaySpeaker'])
     ->middleware('auth:sanctum')
     ->name('pdf.data.away-speaker');
+
+Route::get('pdf/data/service-meetings/{year?}/{month?}', [PdfController::class, 'serviceMeetings'])
+    ->middleware('auth:sanctum')
+    ->name('pdf.data.service-meetings');
 
 Route::get('pdf/data/weekend-meetings', [PdfController::class, 'weekendMeetings'])
     ->middleware('auth:sanctum')

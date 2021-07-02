@@ -13,6 +13,7 @@ class LineHorizontal extends Base {
         this._color = '#000000'
         this._length = length || 10
         this._lineStyle = 'S'
+        this._dashed = [1,0]
     }
 
     render(x, y) {
@@ -25,6 +26,7 @@ class LineHorizontal extends Base {
         this._document
             .setDrawColor(this._color)
             .setLineWidth(this._thickness)
+            .setLineDashPattern(this._dashed)
             .line(startX, startY, startX  + this._length, startY)
     }
 
@@ -61,7 +63,7 @@ class LineHorizontal extends Base {
     }
 
     dashed(length, gap) {
-        this._lineStyle = 'S'
+        this._dashed = [length, gap]
         return this
     }
 }

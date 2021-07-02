@@ -47,6 +47,20 @@ class ServiceMeetingFactory extends Factory
     }
 
     /**
+     * Creates a meeting in this month
+     *
+     * @return ServiceMeetingFactory
+     */
+    public function thisMonth(): ServiceMeetingFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'start_at' => $this->faker->dateTimeBetween(now()->firstOfMonth(), now()->lastOfMonth()),
+            ];
+        });
+    }
+
+    /**
      * Indicate that meeting is for a field service group.
      *
      * @return ServiceMeetingFactory

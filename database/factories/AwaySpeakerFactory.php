@@ -24,7 +24,7 @@ class AwaySpeakerFactory extends Factory
         return [
             'firstname' => $this->faker->firstName,
             'lastname' => $this->faker->lastName,
-            'dispositions' => collect(['1', '2', '3', '4', '5'])->toJson(),
+            'dispositions' => ['1', '2', '3', '4', '5'],
             'email' => $this->faker->optional()->email,
             'phone' => $this->faker->optional()->phoneNumber,
             'may_give_speak_away' => $this->faker->boolean(75),
